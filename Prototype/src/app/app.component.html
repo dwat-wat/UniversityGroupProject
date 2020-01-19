@@ -34,6 +34,7 @@
 <div class="content" role="main">
   <app-login *ngIf="!loggedin"></app-login>
   <app-social-media *ngIf="loggedin"></app-social-media>
+  <app-positions *ngIf="loggedin"></app-positions>
 </div>
 
 <router-outlet></router-outlet>
