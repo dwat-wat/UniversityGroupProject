@@ -1,2 +1,10 @@
-<h2>Social Media</h2>
-<p>social-media works!</p>
+<h1>Social Media</h1>
+<body>
+    <h2>Recent Tweets:</h2>
+    <ngx-twitter-timeline 
+        [data]="{sourceType: 'url', url: 'https://twitter.com/twitterdev'}"
+        [opts]="{tweetLimit: 3}"
+    ></ngx-twitter-timeline>
+</body>
+
+    

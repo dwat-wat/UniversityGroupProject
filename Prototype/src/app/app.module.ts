@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { SocialMediaComponent } from './social-media/social-media.component';
 import { PositionsComponent } from './positions/positions.component';
 
+import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +18,8 @@ import { PositionsComponent } from './positions/positions.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxTwitterTimelineModule
   ],
   providers: [],
   bootstrap: [AppComponent]
