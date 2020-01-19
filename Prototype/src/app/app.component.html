@@ -32,14 +32,9 @@
 </div>
 
 <div class="content" role="main">
-  <app-login *ngIf="!loggedin"></app-login>
+  <app-login *ngIf="!loggedin" (login)="onLogin($event)"></app-login>
   <app-positions *ngIf="loggedin"></app-positions>
-</div>
-
-<div style="text-align: center;">
-    <h2>Trading 313</h2>
-    <canvas id="lineChart"></canvas>
-    <canvas id="candlestickChart"></canvas>
+  <app-graph *ngIf="loggedin"></app-graph>
 </div>
 
 <div style = "float:right" id = "twitter-feed" role = "main">
