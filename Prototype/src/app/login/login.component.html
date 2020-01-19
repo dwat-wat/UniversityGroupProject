@@ -1,1 +1,11 @@
-<p>Login</p>
+<h2>Login</h2>
+<form (ngSubmit)="onSubmit()">
+    <div>
+        <label for="username" >Username</label>
+        <input type="text" formControlName="username" />
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="text" formControlName="password" />
+    </div>
+</form>
