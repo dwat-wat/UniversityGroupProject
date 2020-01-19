@@ -277,14 +277,14 @@ input[type=text]:placeholder {
 
     <!-- Icon -->
     <div class="fadeIn first">
-      <img src="../../assets/Logov1.png" id="icon" alt="User Icon" />
+      <img style="margin: 20px;" width="40" src="../../assets/Logov1.png" alt="Logo" />
     </div>
 
     <!-- Login Form -->
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login" formControlName="username" >
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password" formControlName="password" >
-      <button type="submit" class="fadeIn fourth">Login</button>   
+      <input type="text" id="login"  name="login" placeholder="login" formControlName="username" >
+      <input type="text" id="password"  name="login" placeholder="password" formControlName="password" >
+      <button type="submit" class="btn" style="margin: 5px;">Login</button>   
     </form>
 
     <!-- Remind Passowrd -->
