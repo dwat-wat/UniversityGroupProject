@@ -31,6 +31,7 @@
 
 <div class="content" role="main">
   <app-login *ngIf="!loggedin"></app-login>
+  <app-social-media *ngIf="loggedin"></app-social-media>
 </div>
 
 <router-outlet></router-outlet>
