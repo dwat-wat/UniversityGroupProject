@@ -42,8 +42,8 @@
   </div>
 </div>
 <div id="loggedout" *ngIf="!loggedin">  
-  <app-login *ngIf="!signup" (login)="onLogin($event)"></app-login>
-  <app-sign-up *ngIf="signup" (login)="onSignup($event)"></app-sign-up>
+  <app-login *ngIf="!signup" (login)="onLogin($event)"  (signup)="onClickSignUp($event)"></app-login>
+  <app-sign-up *ngIf="signup" (login)="onLogin($event)"  (signup)="onClickSignUp($event)"></app-sign-up>
 </div>
 
 

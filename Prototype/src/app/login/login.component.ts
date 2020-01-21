@@ -17,11 +17,13 @@ export class LoginRequest {
 })
 export class LoginComponent implements OnInit {
   @Output() login = new EventEmitter<boolean>();
+  @Output() signup = new EventEmitter();
   
   public loginForm: FormGroup;
   loading = false;
   submitted = false;
   returnUrl: string;
+  loginFailed = false;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -44,6 +46,10 @@ export class LoginComponent implements OnInit {
   }
   get f() { return this.loginForm.controls; }
 
+  public onClickSignUp(){
+    this.signup.emit(true);
+  }
+
   public async onSubmit() {
     this.submitted = true;
     if (this.loginForm.invalid) {
@@ -61,7 +67,10 @@ export class LoginComponent implements OnInit {
         this.login.emit(this.f.username.value);
       }
       else{
+        console.log("failed login")
         this.login.emit(null);
+        this.loginFailed = true;
+        console.log(this.loginFailed)
       }
     });
 

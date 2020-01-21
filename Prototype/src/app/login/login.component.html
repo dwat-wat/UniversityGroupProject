@@ -329,12 +329,15 @@ input[type=password]:placeholder {
       </div>
       <div class="form-group">
         <button type="submit" class="btn" style="margin-bottom: 5px;">Login</button>   
+        <div *ngIf="loginFailed" style="color:#dc3545;">Login failed - check your username and/or password</div>
       </div>
     </form>
+      
+   
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Sign up</a>
+      <a class="underlineHover" href="#" (click)="onClickSignUp()">Sign up</a>
     </div>
   </div>
 </div>
