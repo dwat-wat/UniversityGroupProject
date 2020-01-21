@@ -40,6 +40,12 @@
   <div style = "float:right" id = "twitter-feed" role = "main">
     <app-social-media></app-social-media>
   </div>
+
+  <app-comparison-screen>
+    
+  </app-comparison-screen>
+
+
 </div>
 <div id="loggedout" *ngIf="!loggedin">  
   <app-login *ngIf="!signup" (login)="onLogin($event)"  (signup)="onClickSignUp($event)"></app-login>

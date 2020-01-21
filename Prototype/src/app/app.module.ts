@@ -13,6 +13,8 @@ import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 import { GraphComponent } from './graph/graph.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { CookieService } from 'ngx-cookie-service';
+import { ComparisonScreenComponent } from './comparison-screen/comparison-screen.component';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { CookieService } from 'ngx-cookie-service';
     SocialMediaComponent,
     PositionsComponent,
     GraphComponent,
-    SignUpComponent
+    SignUpComponent,
+    ComparisonScreenComponent
+
   ],
   imports: [
     BrowserModule,
