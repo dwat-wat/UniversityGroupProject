@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 import { GraphComponent } from './graph/graph.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { GraphComponent } from './graph/graph.component';
     LoginComponent,
     SocialMediaComponent,
     PositionsComponent,
-    GraphComponent
+    GraphComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

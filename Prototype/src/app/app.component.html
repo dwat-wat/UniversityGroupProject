@@ -31,14 +31,20 @@
   </a>
 </div>
 
-<div class="content" role="main">
-  <app-login *ngIf="!loggedin" (login)="onLogin($event)"></app-login>
-  <app-positions *ngIf="loggedin"></app-positions>
-  <app-graph *ngIf="loggedin"></app-graph>
+<div id="loggedin" *ngIf="loggedin">
+  <div class="content" role="main">
+    <app-positions></app-positions>
+    <app-graph></app-graph>
+  </div>
+  
+  <div style = "float:right" id = "twitter-feed" role = "main">
+    <app-social-media></app-social-media>
+  </div>
+</div>
+<div id="loggedout" *ngIf="!loggedin">  
+  <app-login *ngIf="!signup" (login)="onLogin($event)"></app-login>
+  <app-sign-up *ngIf="signup" (login)="onSignup($event)"></app-sign-up>
 </div>
 
-<div style = "float:right" id = "twitter-feed" role = "main">
-  <app-social-media *ngIf="loggedin"></app-social-media>
-</div>
 
 <router-outlet></router-outlet>
