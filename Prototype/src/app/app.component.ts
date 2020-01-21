@@ -7,10 +7,9 @@ import { Component} from '@angular/core';
 })
 export class AppComponent {
   title     = 'Prototype';
-  loggedin  = false;
+  loggedin  = null;
 
   onLogin(_loggedin: boolean){
-    console.log("onlogin")
     this.loggedin = _loggedin;
   }
 }

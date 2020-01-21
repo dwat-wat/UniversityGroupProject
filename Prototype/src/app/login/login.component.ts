@@ -1,6 +1,14 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpResponse } from '@angular/common/http'
+import { HttpHeaders } from '@angular/common/http';
+
+export class LoginRequest {
+  region: string
+  username: string
+  password: string
+}
 
 @Component({
   selector: 'app-login',
@@ -15,9 +23,16 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
+  };
+
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private http: HttpClient) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -29,10 +44,28 @@ export class LoginComponent implements OnInit {
   }
   get f() { return this.loginForm.controls; }
 
-  public onSubmit() {
-    console.log(this.f.username.value + this.f.password.value);
-    this.login.emit(true);
-    return false;
+  public async onSubmit() {
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    // console.log(this.f.username.value + this.f.password.value);
+    let req = new LoginRequest();
+    req.region = "UK"
+    req.username = this.f.username.value
+    req.password = this.f.password.value
+    
+    await this.http.post<any>('https://uokgpwebapi.azurewebsites.net/api/accounts/login', req, this.httpOptions).subscribe(response => {
+      if (response["statusCode"] == 200){
+        this.login.emit(this.f.username.value);
+      }
+      else{
+        this.login.emit(null);
+      }
+    });
+
+    
     // if (this.loginForm.valid) {
       
     // }
