@@ -71,7 +71,6 @@ export class SignUpComponent implements OnInit {
         console.log(response["statusCode"]);  
       }
       else{
-        this.login.emit(null);
         this.signupFailed = true;
       }
     });

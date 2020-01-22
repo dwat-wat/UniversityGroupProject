@@ -17,6 +17,7 @@ import { ComparisonScreenComponent } from './comparison-screen/comparison-screen
 import { AccountComponent } from './account/account.component';
 import { HomeComponent } from './home/home.component';
 import { MainComponent } from './main/main.component';
+import { PricePredictionComponent } from './price-prediction/price-prediction.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MainComponent } from './main/main.component';
     ComparisonScreenComponent,
     AccountComponent,
     HomeComponent,
-    MainComponent
+    MainComponent,
+    PricePredictionComponent
   ],
   imports: [
     BrowserModule,
