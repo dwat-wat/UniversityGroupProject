@@ -1,7 +1,25 @@
 <body>
-    <h2>Recent Tweets:</h2>
-    <ngx-twitter-timeline 
-        [data]="{sourceType: 'url', url: 'https://twitter.com/CollectorDev'}"
-        [opts]="{tweetLimit: 5}"
-    ></ngx-twitter-timeline>
+    <div style = "float:right">
+        <h2>Recent Tweets:</h2>
+        <ngx-twitter-timeline 
+            [data]="{sourceType: 'url', url: 'https://twitter.com/CollectorDev'}"
+            [opts]="{tweetLimit: 5}"
+        ></ngx-twitter-timeline>
+    </div>
+    <div style = "float:left">
+            <h2>Reddit:</h2>
+            <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">#</th>
+                      <th scope="col">#</th>
+                      <th scope="col">#</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    
+                    </tbody>
+                </table>
+    </div>
 </body>
