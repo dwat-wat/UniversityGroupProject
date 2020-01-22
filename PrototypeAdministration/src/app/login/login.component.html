@@ -312,7 +312,7 @@ input[type=password]:placeholder {
     </div>
 
     <!-- Login Form -->
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <input type="text" formControlName="username" class="form-control" 
         [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
@@ -328,14 +328,16 @@ input[type=password]:placeholder {
         </div>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn" style="margin-bottom: 5px;">Sign Up</button>  
-        <div *ngIf="signupFailed" style="color:#dc3545;">Sign Up failed</div> 
+        <button type="submit" class="btn" style="margin-bottom: 5px;">Login</button>   
+        <div *ngIf="loginFailed" style="color:#dc3545;">Login failed - check your username and/or password</div>
       </div>
     </form>
-    <p>Password must be longer than 8 characters</p>
+      
+   
+
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" (click)="onClickLogin()">Login</a>
+      <a class="underlineHover" (click)="onClickSignUp()">Sign up</a>
     </div>
   </div>
 </div>
