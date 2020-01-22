@@ -14,7 +14,9 @@ import { GraphComponent } from './graph/graph.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ComparisonScreenComponent } from './comparison-screen/comparison-screen.component';
-
+import { AccountComponent } from './account/account.component';
+import { HomeComponent } from './home/home.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +26,10 @@ import { ComparisonScreenComponent } from './comparison-screen/comparison-screen
     PositionsComponent,
     GraphComponent,
     SignUpComponent,
-    ComparisonScreenComponent
-
+    ComparisonScreenComponent,
+    AccountComponent,
+    HomeComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

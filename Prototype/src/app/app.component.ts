@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,23 +8,29 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  title     = 'Prototype';
-  loggedin  = null;
-  signup = false;
+  title     = 'Vortex';
 
-  constructor(private cookieService: CookieService){}
+  constructor(private router: Router, private cookieService: CookieService){}
 
-  ngOnInit(): void{    
-    this.loggedin = this.cookieService.get('current-user')
+  ngOnInit(): void{  
+    if(this.user == ''){
+      this.router.navigate(['/main']);
+    }
+    // if(usercookie == ''){
+    //   this.currentview = 'login';
+    // }
+    // else{  
+    //   console.log('home')
+    //   this.loggedin = usercookie;
+    //   this.currentview = 'home';
+    // }
   }
 
-  onLogin(_loggedin: string){
-    console.log(_loggedin)
-    this.loggedin = _loggedin;
-    this.cookieService.set('current-user', this.loggedin)
-  }
-  
-  onClickSignUp(_signup: boolean){
-    this.signup = _signup;
+  get user() { return this.cookieService.get('current-user'); }
+
+  onClickLogout(){
+    this.cookieService.delete('current-user');
+    // this.loggedin = null;
+    // this.currentview = 'login';
   }
 }

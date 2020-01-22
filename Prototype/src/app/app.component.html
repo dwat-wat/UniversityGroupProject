@@ -1,6 +1,6 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <a aria-label="Vortex" target="_self" rel="noopener" href="" title="Home">
+  <a aria-label="Vortex" target="_self" rel="noopener" href="/home" title="Home">
     <img
       height="40"
       style="margin-top: 5px;"
@@ -8,8 +8,13 @@
       src="../assets/LogoWithTextWhitev1.png"
     />
   </a>
-    <div class="spacer"></div>
-    <h2 *ngIf="loggedin">Welcome {{loggedin}}!</h2>
+  <div class="spacer"></div>
+  
+  <h1>
+    <a class="underlineHover" style="color: white;"  *ngIf="user != ''" href="/account" >{{user}}</a>
+  </h1>
+  <a class="underlineHover" style="color: white;"  *ngIf="user != ''" href="/home" (click)="onClickLogout()">Logout</a>
+
   <a aria-label="Angular on twitter" target="_blank" rel="noopener" href="https://twitter.com/angular" title="Twitter">
     <svg id="twitter-logo" height="24" data-name="Logo — FIXED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
       <defs>
@@ -30,27 +35,5 @@
     
   </a>
 </div>
-
-<div id="loggedin" *ngIf="loggedin">
-  <div class="content" role="main">
-    <app-positions></app-positions>
-    <app-graph></app-graph>
-  </div>
-  
-  <div style = "float:right" id = "twitter-feed" role = "main">
-    <app-social-media></app-social-media>
-  </div>
-
-  <app-comparison-screen>
-    
-  </app-comparison-screen>
-
-
-</div>
-<div id="loggedout" *ngIf="!loggedin">  
-  <app-login *ngIf="!signup" (login)="onLogin($event)"  (signup)="onClickSignUp($event)"></app-login>
-  <app-sign-up *ngIf="signup" (login)="onLogin($event)"  (signup)="onClickSignUp($event)"></app-sign-up>
-</div>
-
 
 <router-outlet></router-outlet>

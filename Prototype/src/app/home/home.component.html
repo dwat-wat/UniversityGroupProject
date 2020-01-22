@@ -1,0 +1,5 @@
+<div id="login">  
+  <app-login *ngIf="currentview == 'login'" (login)="onLogin($event)"  (signup)="onClickSignUp($event)"></app-login>
+  <app-sign-up *ngIf="currentview == 'signup'" (login)="onLogin($event)"  (signup)="onClickSignUp($event)"></app-sign-up>
+</div>
+ 
