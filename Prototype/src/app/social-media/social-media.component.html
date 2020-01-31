@@ -1,7 +1,32 @@
 <body>
-    <h2>Recent Tweets:</h2>
-    <ngx-twitter-timeline 
-        [data]="{sourceType: 'url', url: 'https://twitter.com/CollectorDev'}"
-        [opts]="{tweetLimit: 5}"
-    ></ngx-twitter-timeline>
+    <div style = "float:right">
+        <h2>Recent Tweets:</h2>
+        <ngx-twitter-timeline 
+            [data]="{sourceType: 'url', url: 'https://twitter.com/CollectorDev'}"
+            [opts]="{tweetLimit: 5}"
+        ></ngx-twitter-timeline>
+    </div>
+    <div style = "float:left">
+            <h2>Reddit:</h2>
+            <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th scope="col">Post</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Polarity</th>
+                      <th scope="col">Subjectivity</th>
+                    </tr>
+                    <tr>
+                        <th>https://www.reddit.com/r/Bitcoin/comments/esa8ia/bank_of_england_to_consider_adopting//</th>
+                        <th>1554246000</th>
+                        <th>0.1528361344537815</th>
+                        <th>0.5354907347554407</th>
+                    </tr>
+                    
+                    </thead>
+                    <tbody>
+                    
+                    </tbody>
+                </table>
+    </div>
 </body>
