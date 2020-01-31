@@ -40,5 +40,11 @@
   <app-login *ngIf="user == ''" (login)="onLogin($event)" ></app-login>
 </div>
  
+<ngx-gauge [type]="gaugeType"
+[value]="gaugeValue"
+[label]="gaugeLabel"
+[append]="gaugeAppendText">
+</ngx-gauge>
+
 
 <router-outlet></router-outlet>

@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./price-prediction.component.sass']
 })
 export class PricePredictionComponent implements OnInit {
-
+  gaugeType = "semi";
+  gaugeValue = 28.3;
+  gaugeLabel = "Speed";
+  gaugeAppendText = "km/hr";
   constructor() { }
 
   ngOnInit() {

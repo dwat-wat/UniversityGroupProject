@@ -10,6 +10,10 @@ import { HttpClient } from '@angular/common/http'
 })
 export class AppComponent {
   title = 'PrototypeAdministration';
+  gaugeType = "semi";
+  gaugeValue = 28.3;
+  gaugeLabel = "Speed";
+  gaugeAppendText = "km/hr";
 
   constructor(private cookieService: CookieService, private router: Router, private httpClient: HttpClient) { }
 
