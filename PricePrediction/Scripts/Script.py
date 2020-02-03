@@ -5,7 +5,8 @@ import json
 import datetime
 import numpy as np
 from sklearn.svm import SVR, LinearSVR
-from sklearn.preprocessing import PolynomialFeatures
+from sklearn.preprocessing import PolynomialFeatures as pf
+from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 import warnings
 from azure.cosmosdb.table.tableservice import TableService
@@ -25,28 +26,38 @@ prices = []
 
 def predict_prices(x):
     _dates = np.reshape(dates, (len(dates), 1))
+    
     svr_rbf = SVR(C=1e3, gamma = 0.1)
-    svr_lin = LinearSVR(C=1e3, max_iter=1000)
     svr_rbf.fit(_dates, prices)
-    with warnings.catch_warnings():
-        warnings.simplefilter('ignore')
-        svr_lin.fit(_dates, prices)
+    
+    lin_reg = LinearRegression()
+    lin_reg.fit(_dates, prices)
+    
+    poly_reg = pf(degree=4)
+    X_poly = poly_reg.fit_transform(_dates)
+    pol_reg = LinearRegression()
+    pol_reg.fit(X_poly, prices)
     
     plt.scatter(_dates, prices, color='blue', label='Data')
     plt.plot(_dates, svr_rbf.predict(_dates), color='green', label='RBF Model')
-    plt.plot(_dates, svr_lin.predict(_dates), color='red', label='Linear Model')
+    plt.plot(_dates, lin_reg.predict(_dates), color='red', label='Linear Model')
+    plt.plot(_dates, pol_reg.predict(poly_reg.fit_transform(_dates)), color='orange', label='Polynomial Model')
     
     prediction_rbf = svr_rbf.predict(np.array(x).reshape(1, 1))[0]
-    prediction_lin = svr_lin.predict(np.array(x).reshape(1, 1))[0]
+    prediction_lin = lin_reg.predict(np.array(x).reshape(1, 1))[0]
+    prediction_poly = pol_reg.predict(poly_reg.fit_transform([[x]]))
+    
     plt.scatter([x], [prediction_rbf], color='green', label='RBF Prediction')
     plt.scatter([x], [prediction_lin], color='red', label='Linear Prediction')
+    plt.scatter([x], [prediction_poly], color='orange', label='Polynomial Prediction')
+    
     plt.xlabel('Date (Day)')
     plt.ylabel('Price (£)')
     plt.title('Price Prediction')
     plt.legend()
     plt.show()    
     
-    return prediction_rbf, prediction_lin
+    return prediction_rbf, prediction_lin, prediction_poly
 
 # Monthly Data
 def get_data_thismonth(query):
@@ -67,8 +78,8 @@ def get_data_thismonth(query):
 def thismonth():
     print("This Month:\n")
     get_data_thismonth("histoday?fsym=BTC&tsym=GBP&limit=")
-    predictedprices = predict_prices((datetime.datetime.today()+datetime.timedelta(days=1)).day)
-    print("Tomorrows price: ", "\nRBF £", predictedprices[0], "\nLinear £", predictedprices[1])
+    predictedprices = predict_prices(datetime.datetime.today().day + 1) #(datetime.datetime.today()+datetime.timedelta(days=1)).day
+    print("Tomorrows price: ", "\nRBF £", predictedprices[0], "\nLinear £", predictedprices[1], "\nPolynomial £", predictedprices[2])
 
 # Daily Data
 def get_data_pastdays(query, ndays):
@@ -102,19 +113,15 @@ def pastdays(ndays):
     print("Past " + str(ndays) +" days:\n")
     get_data_pastdays("histoday?fsym=BTC&tsym=GBP&limit=", ndays)
     predictedprices = predict_prices(ndays+1)
-    update_table('BTC', 
-                 actualdates[len(dates)-1], 
-                 predictedprices[0], 
-                 predictedprices[1], 
-                 0)
-    print("Tomorrows price: ", "\nRBF £", predictedprices[0], "\nLinear £", predictedprices[1])
+    update_table('BTC', actualdates[len(dates)-1], predictedprices[0], predictedprices[1], predictedprices[2][0], 0)
+    print("Tomorrows price: ", "\nRBF £", predictedprices[0], "\nLinear £", predictedprices[1], "\nPolynomial £", predictedprices[2][0])
 
-def update_table(currency, day, rbf, linear, actual):
-    print("Updating table: ", "\nCurrency: ", currency, "\nDay: ", day, "\nRBF: ", rbf, "\nLinear: ", linear, "\nActual: ", actual)
+def update_table(currency, day, rbf, linear, poly, actual):
+    print("Updating table: ", "\nCurrency: ", currency, "\nDay: ", day, "\nRBF: ", rbf, "\nLinear: ", linear, "\nPolynomial: ", poly, "\nActual: ", actual)
     table_service = TableService(connection_string=tablestorageconnectionstring)
     
-    entity = {'PartitionKey': currency, 'RowKey': day, 'RBF': EntityProperty(EdmType.DOUBLE, rbf), 'Linear': EntityProperty(EdmType.DOUBLE, linear), 'Actual': EntityProperty(EdmType.DOUBLE, actual)}
-    table_service.insert_or_merge_entity('PredictionData', entity)
+    entity = {'PartitionKey': currency, 'RowKey': day, 'RBF': EntityProperty(EdmType.DOUBLE, rbf), 'Linear': EntityProperty(EdmType.DOUBLE, linear), 'Polynomial': EntityProperty(EdmType.DOUBLE, poly),'Actual': EntityProperty(EdmType.DOUBLE, actual)}
+    table_service.insert_or_replace_entity('PredictionData', entity)
 
 def alldata():
     print("All Data:\n")
@@ -126,6 +133,7 @@ def alldata():
                  actualdates[len(dates)-1], 
                  predictedprices[0], 
                  predictedprices[1], 
+                 predictedprices[2][0],
                  nextactual)
     for i in range(0, 2000):
         nextactual = prices[-1]
@@ -136,15 +144,16 @@ def alldata():
                          actualdates[len(dates)-1], 
                          predictedprices[0], 
                          predictedprices[1], 
+                         predictedprices[2][0],
                          nextactual) 
         except:
             print("Failed to insert entity.")
-        print("Tomorrows price: ", "\nRBF £", predictedprices[0], "\nLinear £", predictedprices[1])
+        print("\nTomorrows price: ", "\nRBF £", predictedprices[0], "\nLinear £", predictedprices[1])
 
 # Main    
 
-thismonth()
-#pastdays(25)
-#alldata()
+#thismonth()
+#pastdays(10)
+alldata()
 
 
