@@ -1,2 +1,6 @@
 node_modules
 PricePrediction/Scripts/ApiKeyandConnectionString
+*.cache
+PricePrediction/MachineLearning/.vs/
+PricePrediction/MachineLearning/MachineLearning/bin/
+PricePrediction/MachineLearning/MachineLearning/obj/

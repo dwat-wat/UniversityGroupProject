@@ -8,7 +8,6 @@ from sklearn.svm import SVR, LinearSVR
 from sklearn.preprocessing import PolynomialFeatures as pf
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
-import warnings
 from azure.cosmosdb.table.tableservice import TableService
 from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
 
@@ -103,7 +102,7 @@ def get_data_pastdays(query, ndays):
             timestamps.append(data["time"])
             actualdates.append(_date.strftime("%y") + str(_date.timetuple().tm_yday).zfill(3))
             dates.append(i)
-            prices.append(float(data["open"]))
+            prices.append(float(data["close"]))
             i += 1
     else:
         print("Error: ", response.status_code)
