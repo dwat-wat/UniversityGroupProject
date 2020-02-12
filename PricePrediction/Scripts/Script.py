@@ -10,14 +10,18 @@ from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 from azure.cosmosdb.table.tableservice import TableService
 from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
+from azure.storage.blob import BlobServiceClient
 
 # Properties
 apikey = ''
 tablestorageconnectionstring = ''
 dates = []
-actualdates = []
+shortdates = []
 timestamps = []
 prices = []
+filesforblob = []
+
+CURRENCY = 'BTC'
 
 # Classes
 
@@ -54,7 +58,10 @@ def predict_prices(x):
     plt.ylabel('Price (£)')
     plt.title('Price Prediction')
     plt.legend()
-    plt.show()    
+    filename = CURRENCY + '_' + shortdates[len(dates)-1] + '.png'
+    plt.savefig('../Documents/Generated_Graphs/'+filename)
+    filesforblob.append(filename)
+    plt.show()   
     
     return prediction_rbf, prediction_lin, prediction_poly
 
@@ -76,7 +83,7 @@ def get_data_thismonth(query):
     
 def thismonth():
     print("This Month:\n")
-    get_data_thismonth("histoday?fsym=BTC&tsym=GBP&limit=")
+    get_data_thismonth("histoday?fsym="+CURRENCY+"&tsym=GBP&limit=")
     predictedprices = predict_prices(datetime.datetime.today().day + 1) #(datetime.datetime.today()+datetime.timedelta(days=1)).day
     print("Tomorrows price: ", "\nRBF £", predictedprices[0], "\nLinear £", predictedprices[1], "\nPolynomial £", predictedprices[2])
 
@@ -84,12 +91,12 @@ def thismonth():
 def get_data_pastdays(query, ndays):
     global dates
     global prices
-    global actualdates
+    global shortdates
     global timestamps
     if len(dates) > 0:
         dates = []
         prices = []
-        actualdates = []
+        shortdates = []
         timestamps = []
     url = "https://min-api.cryptocompare.com/data/v2/" + query + str(ndays) + "&api_key=" + apikey
     response = requests.get(url)
@@ -100,7 +107,7 @@ def get_data_pastdays(query, ndays):
             _date = datetime.datetime(1, 1, 1) + datetime.timedelta(seconds=data["time"])
             _date = _date.replace(year=_date.year + 1969)
             timestamps.append(data["time"])
-            actualdates.append(_date.strftime("%y") + str(_date.timetuple().tm_yday).zfill(3))
+            shortdates.append(_date.strftime("%y") + str(_date.timetuple().tm_yday).zfill(3))
             dates.append(i)
             prices.append(float(data["close"]))
             i += 1
@@ -110,9 +117,9 @@ def get_data_pastdays(query, ndays):
 
 def pastdays(ndays):
     print("Past " + str(ndays) +" days:\n")
-    get_data_pastdays("histoday?fsym=BTC&tsym=GBP&limit=", ndays)
+    get_data_pastdays("histoday?fsym="+CURRENCY+"&tsym=GBP&limit=", ndays)
     predictedprices = predict_prices(ndays+1)
-    update_table('BTC', actualdates[len(dates)-1], predictedprices[0], predictedprices[1], predictedprices[2][0], 0)
+    update_table(CURRENCY, shortdates[len(dates)-1], predictedprices[0], predictedprices[1], predictedprices[2][0], 0)
     print("Tomorrows price: ", "\nRBF £", predictedprices[0], "\nLinear £", predictedprices[1], "\nPolynomial £", predictedprices[2][0])
 
 def update_table(currency, day, rbf, linear, poly, actual):
@@ -126,33 +133,47 @@ def alldata():
     print("All Data:\n")
     nextactual = 0
     ndays = 10
-    get_data_pastdays("histoday?fsym=BTC&tsym=GBP&limit=", ndays)
+    get_data_pastdays("histoday?fsym="+CURRENCY+"&tsym=GBP&limit=", ndays)
     predictedprices = predict_prices(ndays+1)
-    update_table('BTC', 
-                 actualdates[len(dates)-1], 
+    update_table(CURRENCY, 
+                 shortdates[len(dates)-1], 
                  predictedprices[0], 
                  predictedprices[1], 
                  predictedprices[2][0],
                  nextactual)
     for i in range(0, 2000):
         nextactual = prices[-1]
-        get_data_pastdays("histoday?fsym=BTC&tsym=GBP&toTs=" + str(timestamps[-2]) + "&limit=", ndays)
+        get_data_pastdays("histoday?fsym="+CURRENCY+"&tsym=GBP&toTs=" + str(timestamps[-2]) + "&limit=", ndays)
         predictedprices = predict_prices(ndays+1)
         try:
-            update_table('BTC', 
-                         actualdates[len(dates)-1], 
+            update_table(CURRENCY, 
+                         shortdates[len(dates)-1], 
                          predictedprices[0], 
                          predictedprices[1], 
                          predictedprices[2][0],
                          nextactual) 
+            
         except:
             print("Failed to insert entity.")
         print("\nTomorrows price: ", "\nRBF £", predictedprices[0], "\nLinear £", predictedprices[1])
+
+def uploadblobs():
+    blob_service_client = BlobServiceClient.from_connection_string(tablestorageconnectionstring)
+    print("\nGenerated Graphs:")
+    for f in filesforblob:
+        print(f)
+        blob_client = blob_service_client.get_blob_client(container='blob-container', blob=f)
+        with open('../Documents/Generated_Graphs/'+f, "rb") as graph:
+            blob_client.upload_blob(graph)
+        
 
 # Main    
 
 #thismonth()
 #pastdays(10)
-alldata()
-
+try:
+    alldata()
+except:
+    print("Error!")
+uploadblobs()
 
