@@ -1,39 +1,42 @@
 from azure.cosmosdb.table.tableservice import TableService
 from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
-import httplib2
+import httplib3
 import json
-import urllib2
+import urllib3
 import datetime
 import requests
+import importlib
 
 dayDates = []
-actualdates = []
 timestamps = []
-open = []
+openz = []
 close = []
 high = []
 low = []
-
-def azureTable():
-    table_service = TableService(account_name='accountName', account_key='mykey')
-    table_service.create_table('bitcoinData')
-    bitcoin = {'PartitionKey': time, 'RowKey': open,
-        'Close': close, 'High': high, 'Low': low,'priority': 200}
-    table_service.insert_entity('bitcoinData', bitcoin)
+    
 
 def historicalDataGetter():
-    theApiUrl = "https://min-api.cryptocompare.com/data/v2/histominute?fsym=BTC&tsym=GBP&limit=1999&api_key={cb2d49b598be23432f235ed0c6fe7d96ee2c6d7e2b6459bb6077cbfa21f0b403}"
+    theApiUrl = "https://min-api.cryptocompare.com/data/v2/histominute?fsym=BTC&tsym=GBP&limit=1999&api_key={}"
     theApiResponse = requests.get(theApiUrl)
     if theApiResponse.status_code == 200:
         theResponse = json.loads(theApiResponse.content)
 
         for someData in theResponse["Data"]["Data"]:
-            _date = datetime.datetime(1, 1, 1) + datetime.timedelta(seconds=data["time"])
+            _date = datetime.datetime(1, 1, 1) + datetime.timedelta(seconds=someData["time"])
             dayDates.append(_date.day)
-            open.append(float(data["open"]))
-            close.append(float(data["close"]))
-            high.append(float(data["high"]))
-            low.append(float(data["low"]))
+            openz.append(float(someData["open"]))
+            close.append(float(someData["close"]))
+            high.append(float(someData["high"]))
+            low.append(float(someData["low"]))
         else:
             print("Did not work, error: ", theApiResponse.status_code)
         return
+
+def azureTable(dayDates, open, close, high, low):
+    #table_service = TableService(account_name='', account_key='')
+    table_service = TableService(connection_string='')
+    
+    table_service.create_table('bitcoinData')
+    bitcoin = {'PartitionKey': dayDates, 'RowKey': EntityProperty(EdmType.DOUBLE, openz),
+        'Close': EntityProperty(EdmType.DOUBLE, close), 'High': EntityProperty(EdmType.DOUBLE, high), 'Low': EntityProperty(EdmType.DOUBLE, low),'priority': 200}
+    table_service.insert_entity('bitcoinData', bitcoin)
