@@ -15,7 +15,7 @@ high = []
 low = []
 
 def azureTable():
-    table_service = TableService(account_name='sauokgp', account_key='mykey')
+    table_service = TableService(account_name='accountName', account_key='mykey')
     table_service.create_table('bitcoinData')
     bitcoin = {'PartitionKey': time, 'RowKey': open,
         'Close': close, 'High': high, 'Low': low,'priority': 200}
