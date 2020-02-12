@@ -1,0 +1,39 @@
+from azure.cosmosdb.table.tableservice import TableService
+from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
+import httplib2
+import json
+import urllib2
+import datetime
+import requests
+
+dayDates = []
+actualdates = []
+timestamps = []
+open = []
+close = []
+high = []
+low = []
+
+def azureTable():
+    table_service = TableService(account_name='sauokgp', account_key='mykey')
+    table_service.create_table('bitcoinData')
+    bitcoin = {'PartitionKey': time, 'RowKey': open,
+        'Close': close, 'High': high, 'Low': low,'priority': 200}
+    table_service.insert_or_replace_entity('bitcoinData', bitcoin)
+
+def liveDataGetter():
+    theApiUrl = "https://min-api.cryptocompare.com/data/v2/histominute?fsym=BTC&tsym=GBP&limit=1999&api_key={cb2d49b598be23432f235ed0c6fe7d96ee2c6d7e2b6459bb6077cbfa21f0b403}"
+    theApiResponse = requests.get(theApiUrl)
+    if theApiResponse.status_code == 200:
+        theResponse = json.loads(theApiResponse.content)
+
+        for someData in theResponse["Data"]["Data"]:
+            _date = datetime.datetime(1, 1, 1) + datetime.timedelta(seconds=data["time"])
+            dayDates.append(_date.day)
+            open.append(float(data["open"]))
+            close.append(float(data["close"]))
+            high.append(float(data["high"]))
+            low.append(float(data["low"]))
+        else:
+            print("Did not work, error: ", theApiResponse.status_code)
+        return
