@@ -1,11 +1,48 @@
-<h1>positions works!</h1>
-<form (ngSubmit)="onSubmit()">
-    <div>
-        <button for="buy" >Buy</button>
-        
-    </div>
-    <div>
-        <button for="Sell">Sell</button>
-        
-    </div>
-</form>
+
+<!DOCTYPE html>
+<html>
+    <body>
+        <div class = "positions">
+            <div id = "content">
+                <form [formGroup] = "positionsForm" (ngSubmit) = "onSubmit()">
+                    <div class="form-group">
+                        <div>
+                            <button type = "submit" name = "positionType"  class = "btn"> Buy </button>
+                        </div>
+
+                        <div>
+                            <input type = "number" name = "positionQuantity" class = "form-control" min = "1" >
+                        </div>
+                        
+                        <div>
+                            <button type = "submit" name = "positionType"  class = "btn"> Sell </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- <table class = "positionsTable">
+                    <thead>
+                        <tr>
+                            <Th> Currency </Th>
+                            <th> Quantity </th>
+                            <th> Position Type </th>
+                            <th> Bought Price </th>
+                            <th> Current Price </th>
+                            <th> Profit </th>
+                            <th> Date </th>
+                        </tr>
+                    </thead>
+                </table> -->
+            </div>
+        </div>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+

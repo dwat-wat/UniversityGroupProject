@@ -20,11 +20,8 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
-<<<<<<< Updated upstream
-    "@types/chart.js": "^2.9.13",
-=======
     "@swimlane/ngx-charts": "^13.0.2",
->>>>>>> Stashed changes
+    "@types/chart.js": "^2.9.13",
     "chart.js": "^2.9.3",
     "ngx-cookie-service": "^2.3.0",
     "ngx-twitter-timeline": "^0.1.5",
