@@ -13,8 +13,8 @@ from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
 from azure.storage.blob import BlobServiceClient
 
 # Properties
-apikey = '57b9285261bf74807812697d0aa133456f7b0054c5fd040b232003cd4b22de3f'
-tablestorageconnectionstring = 'DefaultEndpointsProtocol=https;AccountName=sauokgp;AccountKey=113mdwUqIiqt4K2HonK80HakIOplxYZINmQME5KB1IZfP+v3JHZK64wpoTP5NBFaG0MaO/TVqA0nW4KuCINTow==;EndpointSuffix=core.windows.net'
+apikey = ''
+tablestorageconnectionstring = ''
 
 dates = []
 shortdates = []
