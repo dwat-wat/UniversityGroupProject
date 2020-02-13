@@ -1,7 +1,19 @@
 <html>
+
+    <div id="mylinechart" class="canvasContainer" style="text-align: center;"> 
+        <h2>Comparison</h2>
+        <canvas id="lineChart2" ></canvas> 
+        
+    </div>
+    
+    <style> #mylinechart{display: none;}
+    </style>
+
 <head>
 
-<script type="text/javascript">
+    <title> Vortex </title>
+
+<!--<script type="text/javascript">
     
     function fn1()
     {
@@ -11,19 +23,18 @@
     
     
     </script>
-
+-->
 
 </head>
+
 <p>comparison-screen works!</p>
-
-
-
 
 <body>
 
     <input id="text1" placeholder="Enter Username">
     <br>
-    <button onclick="fn1()" id="btn1">Compare!</button>
+    <button (click)="compare()"> Compare!</button>
+    
 </body>
 
 
