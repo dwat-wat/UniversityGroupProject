@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.14",
+    "@angular/cdk": "^9.0.0",
     "@angular/common": "~8.2.14",
     "@angular/compiler": "~8.2.14",
     "@angular/core": "~8.2.14",
@@ -19,7 +20,11 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+<<<<<<< Updated upstream
     "@types/chart.js": "^2.9.13",
+=======
+    "@swimlane/ngx-charts": "^13.0.2",
+>>>>>>> Stashed changes
     "chart.js": "^2.9.3",
     "ngx-cookie-service": "^2.3.0",
     "ngx-twitter-timeline": "^0.1.5",

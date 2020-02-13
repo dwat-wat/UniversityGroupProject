@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AccountComponent } from './account/account.component'
 import { MainComponent } from './main/main.component'
 import { HomeComponent } from './home/home.component';
+import { PricePredictionComponent } from './price-prediction/price-prediction.component'
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'priceprediction',
+    component: PricePredictionComponent
   },
   {
     path: '**',
