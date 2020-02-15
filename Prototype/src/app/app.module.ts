@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +14,8 @@ import { PositionsComponent } from './positions/positions.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxGaugeModule } from 'ngx-gauge';
 
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 import { GraphComponent } from './graph/graph.component';
@@ -43,9 +49,15 @@ import { PricePredictionComponent } from './price-prediction/price-prediction.co
     ReactiveFormsModule,
     HttpClientModule,
     NgxChartsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgbModule,
+    NgxGaugeModule
   ],
-  providers: [CookieService],
+  providers: [CookieService, MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
