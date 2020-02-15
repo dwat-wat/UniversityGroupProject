@@ -4,11 +4,11 @@ from azure.cosmosdb.table.tableservice import TableService
 from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
 import matplotlib.pyplot as plt
 
-tablestorageconnectionstring = 'DefaultEndpointsProtocol=https;AccountName=sauokgp;AccountKey=113mdwUqIiqt4K2HonK80HakIOplxYZINmQME5KB1IZfP+v3JHZK64wpoTP5NBFaG0MaO/TVqA0nW4KuCINTow==;EndpointSuffix=core.windows.net'
+tablestorageconnectionstring = ''
 
 rLinear = 100.0
 rRBF = 100.0
-rPoly = 100.0
+rPoly = 0.0
 
 predictions = [rLinear, rRBF, rPoly]
 
@@ -20,12 +20,16 @@ avgDiff = 0.0
 
 c = 1.0
 
+currency = ""
+day = ""
+
 # Classes
 
 class MyEntity(object):
     def __init__(self, entity):
-        #print(entity)
+        #print(entity)    
         self.Currency = entity.PartitionKey
+        self.Day = entity.RowKey
         self.Actual = float(entity.Actual)
         self.RBF = entity.RBF
         self.Linear = entity.Linear
@@ -61,6 +65,13 @@ def calc():
 def change():
     global rLinear
     rLinear = rLinear + c
+    
+def updatetable(currency, day, rbf, linear, poly, accuracy):
+    print("Uploading: "+str(currency)+str(day)+str(rbf)+str(linear)+str(poly)+str(accuracy))
+    table_service = TableService(connection_string=tablestorageconnectionstring)
+    
+    entity = {'PartitionKey': currency, 'RowKey': day, 'RBF': EntityProperty(EdmType.DOUBLE, rbf), 'Linear': EntityProperty(EdmType.DOUBLE, linear), 'Polynomial': EntityProperty(EdmType.DOUBLE, poly),'Accuracy': EntityProperty(EdmType.DOUBLE, accuracy)}
+    table_service.insert_or_replace_entity('PredictionConfiguration', entity)
 
 # Main
     
@@ -74,6 +85,10 @@ try:
         entities.append(MyEntity(e))
 except:
     print("")
+        
+currency = entities[len(entities)-1].Currency
+day = entities[len(entities)-1].Day
+print(currency+day)
 n = 0
 for e in entities:
     actual = e.Actual
@@ -94,7 +109,7 @@ while ad != pd:
     for p in predictions:
         prevDiff = avgDiff
         avgDiff = 0.0
-        c = 1.0
+        c = 50.0
         #print("Prediction " + str(j+1))
         while avgDiff != prevDiff:
         #for k in range(1, 10):
@@ -106,7 +121,7 @@ while ad != pd:
                 predictions[j] = op - c
                 avgDiff = calc()
                 if avgDiff > prevDiff:
-                    c = c/2         
+                    c = c/2      
                     predictions[j] = op
             #print("%" + str(avgDiff))
         j = j + 1
@@ -129,11 +144,16 @@ print("Prediction Types:"
       +"\nRBF:          "+str(predictions[1])
       +"\nPolynomial:   "+str(predictions[2])
       +"\nAccuracy:    %"+str(avgDiff))
+
+linear = (predictions[0] / (predictions[0] + predictions[1] + predictions[2]))*100
+rbf = (predictions[1] / (predictions[0] + predictions[1] + predictions[2]))*100
+poly = (predictions[2] / (predictions[0] + predictions[1] + predictions[2]))*100
+
 print("% Prediction Types:\n"
-      + "\nLinear:     %" + str((predictions[0] / (predictions[0] + predictions[1] + predictions[2]))*100)
-      + "\nRBF:        %" + str((predictions[1] / (predictions[0] + predictions[1] + predictions[2]))*100)
-      + "\nPolynomial: %" + str((predictions[2] / (predictions[0] + predictions[1] + predictions[2]))*100))
+      + "\nLinear:     %" + str(linear)
+      + "\nRBF:        %" + str(rbf)
+      + "\nPolynomial: %" + str(poly))
     
-    
-    
+updatetable(currency, day, rbf, linear, poly, avgDiff)
+
     

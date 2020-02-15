@@ -13,8 +13,8 @@ from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
 from azure.storage.blob import BlobServiceClient
 
 # Properties
-apikey = '57b9285261bf74807812697d0aa133456f7b0054c5fd040b232003cd4b22de3f'
-tablestorageconnectionstring = 'DefaultEndpointsProtocol=https;AccountName=sauokgp;AccountKey=113mdwUqIiqt4K2HonK80HakIOplxYZINmQME5KB1IZfP+v3JHZK64wpoTP5NBFaG0MaO/TVqA0nW4KuCINTow==;EndpointSuffix=core.windows.net'
+apikey = ''
+tablestorageconnectionstring = ''
 
 dates = []
 shortdates = []
@@ -142,7 +142,7 @@ def alldata():
                  predictedprices[1], 
                  predictedprices[2][0],
                  nextactual)
-    for i in range(0, 2000):
+    for i in range(0, 5):
         nextactual = prices[-1]
         get_data_pastdays("histoday?fsym="+CURRENCY+"&tsym=GBP&toTs=" + str(timestamps[-2]) + "&limit=", ndays)
         predictedprices = predict_prices(ndays+1)
@@ -171,10 +171,10 @@ def uploadblobs():
 # Main    
 
 #thismonth()
-pastdays(10)
-#try:
-    #alldata()
-#except:
- #   print("Error!")
-#uploadblobs()
+#pastdays(10)
+try:
+    alldata()
+except:
+    print("Error!")
+uploadblobs()
 
