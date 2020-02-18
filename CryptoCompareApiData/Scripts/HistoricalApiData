@@ -34,9 +34,9 @@ def historicalDataGetter():
         return
 
 def azureTable(dayDates, openz, close, high, low):
-    # table_service = TableService(account_name='sauokgp', account_key='113mdwUqIiqt4K2HonK80HakIOplxYZINmQME5KB1IZfP+v3JHZK64wpoTP5NBFaG0MaO/TVqA0nW4KuCINTow==')
+    # table_service = TableService(account_name='', account_key='')
     table_service = TableService(
-        connection_string='DefaultEndpointsProtocol=https;AccountName=sauokgp;AccountKey=113mdwUqIiqt4K2HonK80HakIOplxYZINmQME5KB1IZfP+v3JHZK64wpoTP5NBFaG0MaO/TVqA0nW4KuCINTow==;EndpointSuffix=core.windows.net')
+        connection_string='')
 
     table_service.create_table('bitcoinData')
     bitcoin = {'PartitionKey': dayDates, 'RowKey': EntityProperty(EdmType.DOUBLE, openz),
