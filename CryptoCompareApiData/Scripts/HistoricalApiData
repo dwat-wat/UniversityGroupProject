@@ -1,29 +1,30 @@
 from azure.cosmosdb.table.tableservice import TableService
 from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
-import httplib3
+# import httplib3
 import json
-import urllib3
+# import urllib3
 import datetime
 import requests
 import importlib
 
 dayDates = []
-timestamps = []
+#timestamps = []
 openz = []
 close = []
 high = []
 low = []
-    
 
 def historicalDataGetter():
-    theApiUrl = "https://min-api.cryptocompare.com/data/v2/histominute?fsym=BTC&tsym=GBP&limit=1999&api_key={}"
+    theApiUrl = "https://min-api.cryptocompare.com/data/v2/histominute?fsym=BTC&tsym=GBP&limit=1999&api_key={cb2d49b598be23432f235ed0c6fe7d96ee2c6d7e2b6459bb6077cbfa21f0b403}"
     theApiResponse = requests.get(theApiUrl)
+    
     if theApiResponse.status_code == 200:
         theResponse = json.loads(theApiResponse.content)
 
         for someData in theResponse["Data"]["Data"]:
-            _date = datetime.datetime(1, 1, 1) + datetime.timedelta(seconds=someData["time"])
-            dayDates.append(_date.day)
+            thedate = datetime.datetime(1, 1, 1) + datetime.timedelta(seconds=someData["time"])
+            thedate = thedate.replace(year=thedate.year + 1969)
+            dayDates.append(thedate)
             openz.append(float(someData["open"]))
             close.append(float(someData["close"]))
             high.append(float(someData["high"]))
@@ -32,11 +33,17 @@ def historicalDataGetter():
             print("Did not work, error: ", theApiResponse.status_code)
         return
 
-def azureTable(dayDates, open, close, high, low):
-    #table_service = TableService(account_name='', account_key='')
-    table_service = TableService(connection_string='')
-    
+def azureTable(dayDates, openz, close, high, low):
+    # table_service = TableService(account_name='sauokgp', account_key='113mdwUqIiqt4K2HonK80HakIOplxYZINmQME5KB1IZfP+v3JHZK64wpoTP5NBFaG0MaO/TVqA0nW4KuCINTow==')
+    table_service = TableService(
+        connection_string='DefaultEndpointsProtocol=https;AccountName=sauokgp;AccountKey=113mdwUqIiqt4K2HonK80HakIOplxYZINmQME5KB1IZfP+v3JHZK64wpoTP5NBFaG0MaO/TVqA0nW4KuCINTow==;EndpointSuffix=core.windows.net')
+
     table_service.create_table('bitcoinData')
     bitcoin = {'PartitionKey': dayDates, 'RowKey': EntityProperty(EdmType.DOUBLE, openz),
-        'Close': EntityProperty(EdmType.DOUBLE, close), 'High': EntityProperty(EdmType.DOUBLE, high), 'Low': EntityProperty(EdmType.DOUBLE, low),'priority': 200}
+               'Close': EntityProperty(EdmType.DOUBLE, close), 'High': EntityProperty(EdmType.DOUBLE, high),
+               'Low': EntityProperty(EdmType.DOUBLE, low), 'priority': 200}
     table_service.insert_entity('bitcoinData', bitcoin)
+    
+
+#historicalDataGetter()
+#azureTable(dayDates, openz, close, high, low)
