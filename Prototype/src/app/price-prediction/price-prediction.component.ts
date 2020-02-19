@@ -104,7 +104,7 @@ export class PricePredictionComponent implements OnInit {
     let year = yDoY.slice(0,2);
     let dayofyear = yDoY.slice(2,5);
 
-    return dayofyear + year;
+    return year + "-" + dayofyear;
   }
 
   async getData(){

@@ -1,4 +1,4 @@
-<div style="margin: 1%;">
+<div style="margin: 1%; width: 100%; overflow-x:hidden; overflow-y: hidden;">
     <div style="float: left; width: 8%;">
         <h3>From:{{fromdate.shortdate}}</h3>
         <ngb-datepicker #dpfrom [(ngModel)]="modelFrom" (ngModelChange)="onFromDateChange($event)" (navigate)="fromdate = $event.next"></ngb-datepicker>
