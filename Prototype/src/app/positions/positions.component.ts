@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 export class PositionsRequest {
-  timestamp: Date
-  userName: string
-  currency: string
-  quantity: BigInteger
-  positionType: string
+  timestamp : string
+  userName : string
+  currency : string
+  quantity : BigInteger
+  positionType : string
 }
 
 @Component ({
@@ -19,26 +20,26 @@ export class PositionsRequest {
 
 export class PositionsComponent implements OnInit {
 
-  public positionsForm: FormGroup;
+  public positionsForm : FormGroup;
   loading = false;
   submitted = false;
-  returnUrl: string;
+  returnUrl : string;
 
   httpOptions = {
-    headers: new HttpHeaders ({
+    headers : new HttpHeaders ({
       'Content-Type':  'application/json',
     })
   };
   
-  constructor(private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router, 
-    private http: HttpClient) { }
+  constructor(private formBuilder : FormBuilder,
+    private route : ActivatedRoute,
+    private router : Router, 
+    private http : HttpClient,
+    private cookieService: CookieService) { }
     
     ngOnInit() { 
       this.positionsForm = this.formBuilder.group ({
-      buyQuantity: ['', Validators.required],
-      sellQuantity: ['', Validators.required]
+      positionQuantity: ['', Validators.required]
     });
     
     // get return url from route parameters or default to '/'
@@ -47,32 +48,37 @@ export class PositionsComponent implements OnInit {
   
   get f() { return this.positionsForm.controls; }
 
-  public async onBuy() {
+  onBuy() {
+    this.submitted = true;
+    this.openPosition("BUY");
+  }
+
+  onSell() {
+    this.submitted = true;
+    this.openPosition("SELL");
+  }
+
+  public async openPosition(positionType : string) {
+    this.submitted = true;
     
     let req = new PositionsRequest();
     //req.timestamp = this.f.timestamp.value
-    req.userName = this.f.username.value
+
+    req.userName = this.cookieService.get('current-user')
     req.currency = "BITCOIN"
     req.quantity = this.f.positionQuantity.value
-    req.positionType = this.f.positionType.value
+    req.positionType = positionType
+    req.timestamp = new Date().toISOString()
     
-    await this.http.post<any>('https://uokgpwebapi.azurewebsites.net/api/positions/insert', req, this.httpOptions).subscribe(response => {
+    let url = 'https://uokgpwebapi.azurewebsites.net/api/positions/insert';
+    
+    await this.http.post<any>(url, req, this.httpOptions).subscribe(response => {
       if (response["statusCode"] == 200) {
-        console.log(this.f.username.value, this.f.positionQuantity.value, this.f.positionType.value)
+        console.log(req.userName, req.currency, req.quantity, req.positionType, req.timestamp)
       }
     });
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
