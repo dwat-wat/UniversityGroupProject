@@ -1,4 +1,5 @@
 
+
 <html>
     <body>
         <div class = "positions">
@@ -6,19 +7,22 @@
                 <form [formGroup] = "positionsForm">
                     <div class = "form-group">
                         <div>
-                            <button id = "openPosition" (click) = "onBuy()"> Buy </button>
+                            <button id = "openPosition" (click) = "onBuy()"> BUY </button>
+                            <br />
                         </div>
 
                         <div>
                             <input type = "number" formControlName = "positionQuantity" id = "positionQuantity" min = "1" >
+                            <br />
                         </div>
                         
                         <div>
-                            <button id = "openPosition" (click) = "onSell()"> Sell </button>
+                            <button id = "openPosition" (click) = "onSell()"> SELL </button>
+                            <br />
                         </div>
                     </div>
                 </form>
-
+                
                 <table class = "positionsTable">
                     <thead>
                         <tr>
@@ -32,24 +36,17 @@
                         </tr>
                     </thead>
                 </table>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
             </div>
-        </form>
+        </div>
+    </body>
+</html>
 
-        <table class = "positionsTable">
-            <thead>
-                <tr>
-                    <Th> Currency </Th>
-                    <th> Quantity </th>
-                    <th> Position Type </th>
-                    <th> Bought Price </th>
-                    <th> Current Price </th>
-                    <th> Profit </th>
-                    <th> Date </th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-</div>
 
 
 

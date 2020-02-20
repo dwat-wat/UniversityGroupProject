@@ -82,18 +82,14 @@ export class PositionsComponent implements OnInit {
   public async getPositions() {
 
     let url = 'https://uokgpwebapi.azurewebsites.net/api/positions/data/' + this.cookieService.get('current-user') + '/BITCOIN';
-
-    //return this.http.get<any>(url);
-
     
-
-    /* await this.http.get<any>(url, this.httpOptions).subscribe(response => {
+    await this.http.get<any>(url, this.httpOptions).subscribe(response => {
       if (response["statusCode"] == 200) {
         console.log(response)
-        //this.data.push
+        
 
       }
-    }); */
+    });
   }
 }
 
