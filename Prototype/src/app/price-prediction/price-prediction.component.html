@@ -1,86 +1,121 @@
 <div style="margin: 1%; width: 100%; overflow-x:hidden; overflow-y: hidden;">
-    <div style="float: left; width: 8%;">
+    <div style="float: left; width: 18%; color: #1976d2;">
         <h3>From:{{fromdate.shortdate}}</h3>
         <ngb-datepicker #dpfrom [(ngModel)]="modelFrom" (ngModelChange)="onFromDateChange($event)" (navigate)="fromdate = $event.next"></ngb-datepicker>
         <br/>
         <h3>To:{{todate.shortdate}}</h3>
         <ngb-datepicker #dpto [(ngModel)]="modelTo" (ngModelChange)="onToDateChange($event)" (navigate)="todate = $event.next"></ngb-datepicker>   
-    </div>
-        
-    <div *ngIf="linegraphdata[0].series.length > 0" style="float: right;">
-        <ngx-charts-line-chart
-        [view]="graphview"
-        [scheme]="colorScheme"
-        [results]="linegraphdata"
-        [gradient]="gradient"
-        [xAxis]="showXAxis"
-        [yAxis]="showYAxis"
-        [legend]="showLegend"
-        [showXAxisLabel]="showXAxisLabel"
-        [showYAxisLabel]="showYAxisLabel"
-        [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel"
-        [autoScale]="autoScale"
-        (select)="onSelect($event)">
-        </ngx-charts-line-chart>
-    </div>
-
-    <div >
-        <ngx-gauge [type]="gaugeType" 
-           [value]="gaugeValue" 
-           [thresholds]="thresholdConfig"
-           [min]="-5"
-           [max]="5"
-           [size]="gaugeSize"
-           [thick]="40"
-           [backgroundColor]="backgroundColor"
-           style="float:left; left:12%;">
-           <ngx-gauge-value>
-            {{gaugeText}}
-            </ngx-gauge-value>    
-            <ngx-gauge-label>
-                Confidence: {{gaugeConfidence}}%
-            </ngx-gauge-label>
-        </ngx-gauge>
-
-
-        <!-- <ngx-gauge [type]="gaugeType" 
-           [value]="gaugeValueActual" 
-           [thresholds]="thresholdConfig"
-           [min]="-5"
-           [max]="5"
-           [size]="gaugeSize"
-           [thick]="40"
-           [backgroundColor]="backgroundColor"
-           style="float:left; left:12%;"
-           *ngIf>
-           <ngx-gauge-value>
-            {{gaugeActualText}}
-            </ngx-gauge-value>    
-            <ngx-gauge-label>
-                Confidence: {{gaugeActualChange}}%
-            </ngx-gauge-label>
-        </ngx-gauge> -->
-
-        <div *ngIf="data.length > 0">
-            <ngx-charts-gauge 
-            [view]="gaugeview"
-            [scheme]="colorScheme"
-            [results]="data"
-            [legend]="legend"
-            [legendPosition]="legendPosition"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)"
-            [valueFormatting]="onGaugeFormat"
-            style="float: right;">
-            </ngx-charts-gauge>
+        <br/>
+        <div style="width: 100%; margin: 2%;">
+            <input type="button" class="button" style="width: 87%; top: 2%;" name="about" value="About" (click)="onToggleAbout()">
         </div>
+        
     </div>
-
+    <div id="graphs" style="float: right; display: block; height: auto; width: 82%;">
+        <div *ngIf="linegraphdata[0].series.length > 0" style="float: right; color: #1976d2">
+            <h2>Price Prediction History</h2>
+            <ngx-charts-line-chart
+            [view]="graphview"
+            [scheme]="colorSchemeGraph"
+            [results]="linegraphdata"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [autoScale]="autoScale"
+            (select)="onSelect($event)">
+            </ngx-charts-line-chart>
+        </div>
+    
+        <div >
+            <ngx-gauge [type]="gaugeType" 
+               [value]="gaugeValue" 
+               [thresholds]="thresholdConfig"
+               [min]="-5"
+               [max]="5"
+               [size]="gaugeSize"
+               [thick]="40"
+               [backgroundColor]="backgroundColor"
+               style="float:left; left:12%;">
+               <ngx-gauge-value>
+                {{gaugeText}}
+                </ngx-gauge-value>    
+                <ngx-gauge-label>
+                    Confidence: {{gaugeConfidence}}%
+                </ngx-gauge-label>
+            </ngx-gauge>
+    
+    
+            <!-- <ngx-gauge [type]="gaugeType" 
+               [value]="gaugeValueActual" 
+               [thresholds]="thresholdConfig"
+               [min]="-5"
+               [max]="5"
+               [size]="gaugeSize"
+               [thick]="40"
+               [backgroundColor]="backgroundColor"
+               style="float:left; left:12%;"
+               *ngIf>
+               <ngx-gauge-value>
+                {{gaugeActualText}}
+                </ngx-gauge-value>    
+                <ngx-gauge-label>
+                    Confidence: {{gaugeActualChange}}%
+                </ngx-gauge-label>
+            </ngx-gauge> -->
+    
+            <div *ngIf="gaugeValue != 99">
+                <ngx-charts-gauge 
+                [view]="gaugeview"
+                [scheme]="colorSchemeGauge"
+                [results]="data"
+                [legend]="legend"
+                [legendPosition]="legendPosition"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)"
+                [valueFormatting]="onGaugeFormat"
+                style="float: right;">
+                </ngx-charts-gauge>
+            </div>
+        </div>    
+    </div>
     <!-- <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker>
 
     <pre>Month: {{ date.month }}.{{ date.year }}</pre>
     <pre>Model: {{ model | json }}</pre>
      -->
+    <div id="about" style="float: left; width: 96%; padding: 2%;">
+        <div id="aboutsection" *ngIf="showaboutsection">
+            <div>
+                <h2>About the Price Prediction Page</h2>
+                <h3>What is Price Prediction?</h3>
+                <p>
+                    In the world of cryptocurrency and trading, price prediction is the act of taking previous pricing data for a particular currency or stock and using that to estimate what it is likely to be in the future. Price prediction has been done for a long time and many different methods have been invented to provide increasingly accurate results. On this page I made use of a few of those techniques to give an example of their ability to predict prices.
+                </p>
+                <h3>Why?</h3>
+                <p>
+                    The purpose of the price prediction page is to provide users with an introduction onto price prediction techniques. They can take the information provided at their own risk, the purpose is more to allow them to go on and improve or make their own prediction methods and simply use this as a baseline.
+                </p>
+                <h3>How?</h3>
+                <p>
+                    It currently makes use of RBF (Radial-Basis function), Linear and Polynomial regression to predict future prices. It also shows how machine learning can be used with these prediction methods to provide an even more accurate prediction. We call this ComboV1 as its the first version of the combination of all three prediction methods. There are plans to add a ComboV2 which introduces the social media polarity and subjectivity scores from Twitter and Reddit. On top of this I am working on adding another prediction method that involves the use of deep learning through a library created by Keras.
+                </p>
+                <h4>The Graphs:</h4>
+                <ul>
+                    <li>
+                        <ul>
+                            <h5>Line Graph</h5>
+                            <li>The line graph shows the past and current predictions for all the different prediction methods.</li>
+                            <li>Using the date pickers on the left hand side, you can select any date range you desire.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>

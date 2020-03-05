@@ -49,11 +49,14 @@ export class ChartData{
 export class PricePredictionComponent implements OnInit {
   data: any[] = [];
   linegraphdata: any[] = [];
-
+  showaboutsection: boolean = false;
   graphview: any[] = [window.innerWidth * 0.8, window.innerHeight*0.6];
   gaugeview: any[] = [window.innerWidth * 0.4, window.innerHeight*0.4];
-  colorScheme = {
-    domain: ['#fe9e00', '#00fe32', '#00c4fe', '#6800fe', '#ff00fb']
+  colorSchemeGraph = {
+    domain: ['#00fe32', '#fe9e00', '#00c4fe', '#6800fe', '#ff00fb']
+  };
+  colorSchemeGauge = {
+    domain: ['#00fe32', '#ff00fb']
   };
   legend = false;
   legendPosition: string = 'below';
@@ -76,7 +79,7 @@ export class PricePredictionComponent implements OnInit {
     '1': {color: 'green'},
     '3.5': {color: 'darkgreen'}
     };
-  gaugeValue = 2
+  gaugeValue: number = 99
   gaugeText = "Up"
   gaugeType = "semi";
   gaugeConfidence = 0
@@ -173,15 +176,15 @@ export class PricePredictionComponent implements OnInit {
 
   onGaugeFormat(e){
     //console.log(this.data);
-    if(this.gaugeValue){
+    // if(this.gaugeValue){
       // var diff = <number>this.data[0].value - <number>this.data[1].value
       // var percent = diff/<number>this.data[0].value
       // return "%"+percent.toFixed();
       return this.gaugeValue + "%"
-    }
-    else{
-      return "0%"
-    }
+    // }
+    // else{
+    //   return "0%"
+    // }
     //return "%5"
   }
   async onToDateChange(e){
@@ -193,6 +196,10 @@ export class PricePredictionComponent implements OnInit {
     console.log(e)
     this.fromdate = new CustomDate(new Date(e.year, e.month-1, e.day));
     await this.getData();
+  }
+
+  onToggleAbout(){
+    this.showaboutsection = !this.showaboutsection;
   }
 
   onDeactivate(e){
