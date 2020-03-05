@@ -101,17 +101,44 @@
                 <p>
                     The purpose of the price prediction page is to provide users with an introduction onto price prediction techniques. They can take the information provided at their own risk, the purpose is more to allow them to go on and improve or make their own prediction methods and simply use this as a baseline.
                 </p>
+                <p>
+                    An example of this has already been done called ComboV1, this represents a prediction technique that uses a combination of each of the three prediction methods. I stress that the predictions shown on the site should not be taken literally and at the end of the day they are all just guesses, as we know that cryptocurrency is a very volatile investment.    
+                </p>
                 <h3>How?</h3>
                 <p>
                     It currently makes use of RBF (Radial-Basis function), Linear and Polynomial regression to predict future prices. It also shows how machine learning can be used with these prediction methods to provide an even more accurate prediction. We call this ComboV1 as its the first version of the combination of all three prediction methods. There are plans to add a ComboV2 which introduces the social media polarity and subjectivity scores from Twitter and Reddit. On top of this I am working on adding another prediction method that involves the use of deep learning through a library created by Keras.
                 </p>
-                <h4>The Graphs:</h4>
+                <p>
+                    The ComboV1 prediction method currently has a 3.18% accuracy, that is on average the prediction is ~3.2% different that the actual value. This is about ~1-2% more accurate than using RBF alone. The current weighting of each type is as follows:
+                </p>
                 <ul>
                     <li>
+                        RBF: 29%
+                    </li>
+                    <li>
+                        Linear: 56%
+                    </li>
+                    <li>
+                        Polynomial: 15%
+                    </li>
+                </ul>
+                <h4>The Graphs</h4>
+                <ul>
+                    <li>
+                        <h5>Line Graph:</h5>
                         <ul>
-                            <h5>Line Graph</h5>
+                            <img src="../../assets/Graph_About.png" width="800">
                             <li>The line graph shows the past and current predictions for all the different prediction methods.</li>
                             <li>Using the date pickers on the left hand side, you can select any date range you desire.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h5>Up/Down Gauge:</h5>
+                        <ul>
+                            <img src="../../assets/UpDownGauge_About.png" width="800">
+                            <li>The guage displays a simple up or down prediction. This is based on the latest data in the date range given.</li>
+                            <li>The prediction is based on the ComboV1 value for the next day.</li>
+                            <li>If the predicted value is greater than the previous value and the difference is greater than the accuracy margin of 3.18%, we can assume there is strong chance that the price will go up.</li>
                         </ul>
                     </li>
                 </ul>
