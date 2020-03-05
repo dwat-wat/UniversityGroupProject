@@ -14,8 +14,10 @@ from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
 from azure.storage.blob import BlobServiceClient
 
 # Properties
-apikey = ''
-tablestorageconnectionstring = ''
+file = open("ApiKeyandConnectionString.txt","r")
+config = file.readlines();
+apikey = config[0];
+tablestorageconnectionstring = config[1];
 
 dates = []
 shortdates = []

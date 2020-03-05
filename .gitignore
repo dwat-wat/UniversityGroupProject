@@ -4,3 +4,4 @@ PricePrediction/Scripts/ApiKeyandConnectionString
 PricePrediction/MachineLearning/.vs/
 PricePrediction/MachineLearning/MachineLearning/bin/
 PricePrediction/MachineLearning/MachineLearning/obj/
+.vscode/

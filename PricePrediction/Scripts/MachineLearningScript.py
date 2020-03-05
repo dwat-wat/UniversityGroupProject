@@ -4,7 +4,9 @@ from azure.cosmosdb.table.tableservice import TableService
 from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
 import matplotlib.pyplot as plt
 
-tablestorageconnectionstring = ''
+file = open("ApiKeyandConnectionString.txt","r")
+config = file.readlines();
+tablestorageconnectionstring = config[1];
 
 rLinear = 100.0
 rRBF = 100.0

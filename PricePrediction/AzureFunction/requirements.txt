@@ -1,0 +1,7 @@
+requests
+numpy
+sklearn
+azure
+keras
+datetime
+azure-functions
