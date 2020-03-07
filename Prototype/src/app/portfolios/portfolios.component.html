@@ -3,6 +3,7 @@
     
     <!-- Login Form -->
     <form class="form-horizontal" [formGroup]="createPortfolioForm" (ngSubmit)="onCreateSubmit()">
+        <h4>New Portfolio:</h4>
         <div class="form-group">
             <input type="text" formControlName="portfolioname" class="form-control" 
             [ngClass]="{ 'is-invalid': submittedCreate && f.portfolioname.errors }">
@@ -26,6 +27,10 @@
 <br/>
 <br/>
 <div id="portfolios">
+    <div *ngIf="!portfolios">
+        <!-- <mat-progress-spinner></mat-progress-spinner> -->
+        Loading...
+    </div>
     <table *ngIf="portfolios" style="width: 100%;">
         <th>Portfolio</th>
         <th>GBP</th>
