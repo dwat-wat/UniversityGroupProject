@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 export class Portfolio{
   PartitionKey : string
@@ -19,13 +20,28 @@ export class Portfolio{
 export class PortfoliosComponent implements OnInit {
 
   portfolios : Portfolio[]
+  submittedCreate : boolean = false;
 
-  constructor(private cookieService: CookieService,
+  httpOptions = {
+    headers: new HttpHeaders({
+      responseType: 'text'
+    })
+  };
+
+  constructor(private formBuilder: FormBuilder,
+    private cookieService: CookieService,
     private http : HttpClient) { }
 
+    public createPortfolioForm: FormGroup;
+
   ngOnInit(): void {
+    this.createPortfolioForm = this.formBuilder.group({
+      portfolioname: ['', Validators.required],
+      amount: ['', Validators.required]
+    });
     this.getPortfolios();
   }
+  get f() { return this.createPortfolioForm.controls; }
 
   async getPortfolios(){
     let url = 'https://uokgpwebapi.azurewebsites.net/api/portfolio?username='+ this.cookieService.get('current-user')
@@ -35,5 +51,17 @@ export class PortfoliosComponent implements OnInit {
         console.log(response)
         this.portfolios = response
       });
+  }
+
+  public async onCreateSubmit() {
+    this.submittedCreate = true;
+
+    let url = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/new?username='+ this.cookieService.get('current-user') + '&portfolio=' + this.f.portfolioname.value + '&amount=' + this.f.amount.value
+    console.log(url)
+    await this.http.post<any>(url, null, this.httpOptions).subscribe(
+        response => {
+          this.getPortfolios()
+        }
+      );
   }
 }

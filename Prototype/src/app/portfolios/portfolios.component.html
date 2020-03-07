@@ -1,11 +1,40 @@
-<table *ngIf="portfolios">
-    <th>Portfolio</th>
-    <th>GBP</th>
-    <th>Bitcoin</th>
+<div id="portfolioOptions">
 
-    <tr *ngFor="let portfolio of portfolios">
-        <td>{{portfolio.rowKey}}</td>
-        <td>{{portfolio.gbp}}</td>
-        <td>{{portfolio.btc}}</td>
-    </tr>
-</table>
+    
+    <!-- Login Form -->
+    <form class="form-horizontal" [formGroup]="createPortfolioForm" (ngSubmit)="onCreateSubmit()">
+        <div class="form-group">
+            <input type="text" formControlName="portfolioname" class="form-control" 
+            [ngClass]="{ 'is-invalid': submittedCreate && f.portfolioname.errors }">
+            <div *ngIf="submittedCreate && f.portfolioname.errors" class="invalid-feedback">
+              <div *ngIf="f.portfolioname.errors.required">A portfolio name is required</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="number" formControlName="amount" class="form-control" 
+            [ngClass]="{ 'is-invalid': submittedCreate && f.amount.errors }">
+            <div *ngIf="submittedCreate && f.amount.errors" class="invalid-feedback">
+                <div *ngIf="f.amount.errors.required">Starting amount is required</div>
+            </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn" style="margin-bottom: 5px;">Create</button>   
+        </div>
+    </form>
+
+</div>
+<br/>
+<br/>
+<div id="portfolios">
+    <table *ngIf="portfolios" style="width: 100%;">
+        <th>Portfolio</th>
+        <th>GBP</th>
+        <th>Bitcoin</th>
+    
+        <tr *ngFor="let portfolio of portfolios">
+            <td><a href="/account" style="color: #1976d2;">{{portfolio.rowKey}}</a></td>
+            <td>{{portfolio.gbp}}</td>
+            <td>{{portfolio.btc}}</td>
+        </tr>
+    </table>
+</div>
