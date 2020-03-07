@@ -26,6 +26,7 @@ import { AccountComponent } from './account/account.component';
 import { HomeComponent } from './home/home.component';
 import { MainComponent } from './main/main.component';
 import { PricePredictionComponent } from './price-prediction/price-prediction.component';
+import { PortfoliosComponent } from './portfolios/portfolios.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PricePredictionComponent } from './price-prediction/price-prediction.co
     AccountComponent,
     HomeComponent,
     MainComponent,
-    PricePredictionComponent
+    PricePredictionComponent,
+    PortfoliosComponent
   ],
   imports: [
     BrowserModule,

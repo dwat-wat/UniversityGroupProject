@@ -1,0 +1,11 @@
+<table *ngIf="portfolios">
+    <th>Portfolio</th>
+    <th>GBP</th>
+    <th>Bitcoin</th>
+
+    <tr *ngFor="let portfolio of portfolios">
+        <td>{{portfolio.rowKey}}</td>
+        <td>{{portfolio.gbp}}</td>
+        <td>{{portfolio.btc}}</td>
+    </tr>
+</table>
