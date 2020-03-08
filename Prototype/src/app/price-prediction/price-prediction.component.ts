@@ -79,7 +79,7 @@ export class PricePredictionComponent implements OnInit {
     '1': {color: 'green'},
     '3.5': {color: 'darkgreen'}
     };
-  gaugeValue: number = 99
+  gaugeValue: string = '100'
   gaugeText = "Up"
   gaugeType = "semi";
   gaugeConfidence = 0
@@ -154,7 +154,8 @@ export class PricePredictionComponent implements OnInit {
     var prev = pr["actual"]
     var diff = comboV1 - prev
     var percent = (diff/prev) * 100
-    this.gaugeValue = percent
+    //this.gaugeValue = percent+'%'
+    console.log("configureGauge() " + this.gaugeValue)
     if(percent >= threshhold){
       this.gaugeText = "Up"
       this.gaugeConfidence = ((percent/(threshhold*2))*100) - 1
@@ -180,7 +181,14 @@ export class PricePredictionComponent implements OnInit {
       // var diff = <number>this.data[0].value - <number>this.data[1].value
       // var percent = diff/<number>this.data[0].value
       // return "%"+percent.toFixed();
-      return this.gaugeValue + "%"
+      console.log(e)
+      if(e > 10000){
+        return "Predicted vs Previous"
+      }
+      else
+      {
+        return "£"+e
+      }
     // }
     // else{
     //   return "0%"
