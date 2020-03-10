@@ -50,7 +50,7 @@ export class PricePredictionComponent implements OnInit {
   data: any[] = [];
   linegraphdata: any[] = [];
   showaboutsection: boolean = false;
-  graphview: any[] = [window.innerWidth * 0.8, window.innerHeight*0.6];
+  graphview: any[] = [window.innerWidth * 0.8, window.innerHeight*0.5];
   gaugeview: any[] = [window.innerWidth * 0.4, window.innerHeight*0.4];
   colorSchemeGraph = {
     domain: ['#00fe32', '#fe9e00', '#00c4fe', '#6800fe', '#ff00fb']
@@ -79,7 +79,7 @@ export class PricePredictionComponent implements OnInit {
     '1': {color: 'green'},
     '3.5': {color: 'darkgreen'}
     };
-  gaugeValue: string = '100'
+  gaugeValue: number
   gaugeText = "Up"
   gaugeType = "semi";
   gaugeConfidence = 0
@@ -154,7 +154,7 @@ export class PricePredictionComponent implements OnInit {
     var prev = pr["actual"]
     var diff = comboV1 - prev
     var percent = (diff/prev) * 100
-    //this.gaugeValue = percent+'%'
+    this.gaugeValue = percent
     console.log("configureGauge() " + this.gaugeValue)
     if(percent >= threshhold){
       this.gaugeText = "Up"

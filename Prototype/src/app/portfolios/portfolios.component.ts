@@ -4,12 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 export class Portfolio{
-  PartitionKey : string
-  Username : string
-  RowKey : string
-  Portfolio : string
-  GBP : number
-  BTC : number
+  partitionKey : string
+  username : string
+  rowKey : string
+  portfolio : string
+  gbp : number
+  btc : number
+  start : Date
 }
 
 @Component({
@@ -20,6 +21,7 @@ export class Portfolio{
 export class PortfoliosComponent implements OnInit {
 
   portfolios : Portfolio[]
+  selected : Portfolio
   submittedCreate : boolean = false;
 
   httpOptions = {
@@ -63,5 +65,10 @@ export class PortfoliosComponent implements OnInit {
           this.getPortfolios()
         }
       );
+  }
+
+  selectPortfolio(p){
+    console.log(p)
+    this.selected = p;
   }
 }

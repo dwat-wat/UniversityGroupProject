@@ -35,11 +35,20 @@
         <th>Portfolio</th>
         <th>GBP</th>
         <th>Bitcoin</th>
+        <th>Start</th>
     
         <tr *ngFor="let portfolio of portfolios">
-            <td><a href="/account" style="color: #1976d2;">{{portfolio.rowKey}}</a></td>
+            <td><a (click)="selectPortfolio(portfolio)" style="color: #1976d2;">{{portfolio.rowKey}}</a></td>
             <td>{{portfolio.gbp}}</td>
             <td>{{portfolio.btc}}</td>
+            <td>{{portfolio.start}}</td>
         </tr>
     </table>
+</div>
+<br/>
+<br/>
+<div id="selected-portfolio">
+    <div *ngIf="selected">
+        <h4>{{selected.rowKey}}</h4>
+    </div>
 </div>
