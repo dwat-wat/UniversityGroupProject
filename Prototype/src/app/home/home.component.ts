@@ -21,7 +21,11 @@ export class HomeComponent implements OnInit {
 
   onLogin(_loggedin: string){
     this.loggedin = _loggedin;
+    console.log(this.loggedin)
+    console.log(_loggedin)
+    console.log(this.cookieService.get('current-user'))
     this.cookieService.set('current-user', this.loggedin);
+    console.log(this.cookieService.get('current-user'))
     this.router.navigate(['/main']);
   }
   

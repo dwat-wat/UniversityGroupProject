@@ -67,8 +67,8 @@ export class LoginComponent implements OnInit {
         this.login.emit(this.f.username.value);
       }
       else{
-        console.log("failed login")
-        this.login.emit(null);
+        console.log("failed login: ")
+        console.log(response)
         this.loginFailed = true;
         console.log(this.loginFailed)
       }
