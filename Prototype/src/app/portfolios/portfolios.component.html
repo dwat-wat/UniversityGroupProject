@@ -6,14 +6,16 @@
         <h4>New Portfolio:</h4>
         <div class="form-group">
             <input type="text" formControlName="portfolioname" class="form-control" 
-            [ngClass]="{ 'is-invalid': submittedCreate && f.portfolioname.errors }">
+            [ngClass]="{ 'is-invalid': submittedCreate && f.portfolioname.errors }"
+            placeholder="Portfolio Name">
             <div *ngIf="submittedCreate && f.portfolioname.errors" class="invalid-feedback">
               <div *ngIf="f.portfolioname.errors.required">A portfolio name is required</div>
             </div>
         </div>
         <div class="form-group">
             <input type="number" formControlName="amount" class="form-control" 
-            [ngClass]="{ 'is-invalid': submittedCreate && f.amount.errors }">
+            [ngClass]="{ 'is-invalid': submittedCreate && f.amount.errors }"
+            placeholder="Starting Amount">
             <div *ngIf="submittedCreate && f.amount.errors" class="invalid-feedback">
                 <div *ngIf="f.amount.errors.required">Starting amount is required</div>
             </div>
@@ -22,8 +24,8 @@
           <button type="submit" class="btn" style="margin-bottom: 5px;">Create</button>   
         </div>
     </form>
-
 </div>
+<br/>
 <br/>
 <br/>
 <div id="portfolios">
@@ -38,7 +40,7 @@
         <th>Start</th>
     
         <tr *ngFor="let portfolio of portfolios">
-            <td><a (click)="selectPortfolio(portfolio)" style="color: #1976d2;">{{portfolio.rowKey}}</a></td>
+            <td><a (click)="selectPortfolio(portfolio)" style="color: #1976d2; cursor: pointer;">{{portfolio.rowKey}}</a></td>
             <td>{{portfolio.gbp}}</td>
             <td>{{portfolio.btc}}</td>
             <td>{{portfolio.start}}</td>

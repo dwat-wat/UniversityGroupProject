@@ -70,5 +70,7 @@ export class PortfoliosComponent implements OnInit {
   selectPortfolio(p){
     console.log(p)
     this.selected = p;
+    this.cookieService.set('current-portfolio', p.rowKey)
+    console.log(this.cookieService.get('current-portfolio'))
   }
 }
