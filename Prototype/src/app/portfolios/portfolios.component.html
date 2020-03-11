@@ -40,7 +40,7 @@
         <th>Start</th>
     
         <tr *ngFor="let portfolio of portfolios">
-            <td><a (click)="selectPortfolio(portfolio)" style="color: #1976d2; cursor: pointer;">{{portfolio.rowKey}}</a></td>
+            <td><a (click)="selectPortfolio(portfolio)" style="cursor: pointer;">{{portfolio.rowKey}}</a></td>
             <td>{{portfolio.gbp}}</td>
             <td>{{portfolio.btc}}</td>
             <td>{{portfolio.start}}</td>
@@ -51,6 +51,9 @@
 <br/>
 <div id="selected-portfolio">
     <div *ngIf="selected">
-        <h4>{{selected.rowKey}}</h4>
+        <h4>Viewing Portfolio: {{selected.rowKey}}</h4>
+    </div>
+    <div *ngIf="portfoliodata">
+        Insert a graph here of their portfolio value over time.
     </div>
 </div>
