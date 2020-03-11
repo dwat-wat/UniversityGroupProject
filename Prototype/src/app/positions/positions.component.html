@@ -4,55 +4,49 @@
     <body>
         <div class = "positions">
             <div id = "content">
-                <form [formGroup] = "positionsForm">
-                    <div class = "form-group">
-                        <div>
-                            <button class = "button" id = "openPosition" id = "getPosition" (click) = "onBuy()"> BUY </button>
-                            <br />
+                <form class = "form-horizontal" [formGroup] = "positionsForm" >
+                    <div>
+                        <div class = "form-group">
+                            <button class = "btn" id = "openPosition" id = "getPosition" id = "updatePositions" (click) = "onBuy()"> BUY </button>
                         </div>
 
-                        <div>
+                        <div class = "form-group">
                             <input type = "number" class = "input" formControlName = "positionQuantity" id = "positionQuantity" placeholder = "Enter amount" min = "1" >
-                            <br />
                         </div>
-
-                        <!-- <div>
-                            <button class = "button" (click) = "onClose()"> Close </button>
-                            <br />
-                        </div> -->
                         
-                        <div>
-                            <button class = "button" id = "openPosition" id = "getPosition" (click) = "onSell()"> SELL </button>
-                            <br />
-                        </div>
+                        <div class = "form-group" *ngIf = "positions">
+                            <button class = "btn" id = "openPosition" id = "getPosition" id = "updatePositions" (click) = "onSell()"> SELL </button>
+                        </div> 
                     </div>
                 </form>
-                
-                <table class = "positionsTable">
-                    <thead>
-                        <tr>
-                            <th> Currency </th>
-                            <th> Quantity </th>
-                            <th> Position Type </th>
-                            <th> Bought Price </th>
-                            <th> Current Price </th>
-                            <th> Profit </th>
-                            <th> Date </th>
-                        </tr>
-
-                        <!-- <div class = "rows" *ngIf = "positions"> -->
-                        <tr *ngFor = "let pos of positions">
-                            <td> {{ pos.partitionKey }} </td>
-                            <td> {{ pos.quantity }} </td>
-                            <td> {{ pos.positionType }} </td>
-                            <td> xxx </td>
-                            <td> xxx </td>
-                            <td> xxx </td>
-                            <td> {{ pos.timeStamp }} </td>
-                        </tr>
-                        <!-- </div> -->
-                    </thead>
-                </table>
+                <br />
+                <br />
+                <br />
+                <div  class = "positionsTable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th> Currency </th>
+                                <th> Quantity </th>
+                                <th> Position Type </th>
+                                <th> Bought Price </th>
+                                <th> Current Price </th>
+                                <th> Profit </th>
+                                <th> Date </th>
+                            </tr>
+    
+                            <tr class = "rows" *ngFor = "let pos of positions">
+                                <td> {{ pos.partitionKey }} </td>
+                                <td> {{ pos.quantity }} </td>
+                                <td> {{ pos.positionType }} </td>
+                                <td> xxx </td>
+                                <td> 7000 </td>
+                                <td> xxx </td>
+                                <td> {{ pos.timeStamp }} </td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
                 <br />
                 <br />
                 <br />

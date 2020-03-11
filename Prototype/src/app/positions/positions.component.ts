@@ -10,6 +10,7 @@ export class PositionsRequest {
   currency : string
   quantity : number
   positionType : string
+  portfolio : string
 }
 
 @Component ({
@@ -20,7 +21,7 @@ export class PositionsRequest {
 
 export class PositionsComponent implements OnInit {
 
-  //data : any;
+  data : any;
   positions : any;
 
   public positionsForm : FormGroup;
@@ -55,21 +56,14 @@ export class PositionsComponent implements OnInit {
     this.submitted = true;
     this.openPosition("BUY");
     this.getPositions();
-    console.log(this.cookieService.get("current-user/"));
-    //console.log(this.getPosition);
+    this.updateOnBuy();
   }
-
-  // onClose() {
-  //   this.submitted = true;
-  //   console.log(this.cookieService.get("current-user/"));
-    
-  // }
 
   onSell() {
     this.submitted = true;
     this.openPosition("SELL");
     this.getPositions();
-    //console.log(this.getPosition);
+    this.updateOnSell();
   }
 
   public async openPosition(positionType : string) {
@@ -82,10 +76,13 @@ export class PositionsComponent implements OnInit {
     req.quantity = this.f.positionQuantity.value
     req.positionType = positionType
     req.timestamp = new Date().toISOString()
+    req.portfolio = this.cookieService.get('current-portfolio')
+
     
     let url = 'https://uokgpwebapi.azurewebsites.net/api/positions/insert';
     
-    await this.http.post<any>(url, req, this.httpOptions).subscribe(response => {
+    await this.http.post<any>(url, req, this.httpOptions)
+    .subscribe(response => {
       if (response["statusCode"] == 200) {
         console.log(req.userName, req.currency, req.quantity, req.positionType, req.timestamp)
       }
@@ -94,14 +91,54 @@ export class PositionsComponent implements OnInit {
 
   public async getPositions() {
     
-    //let url = 'https://uokgpwebapi.azurewebsites.net/api/positions/data?userName=' + this.cookieService.get("current-user/") + "&currency=BITCOIN";
-    let url = 'https://uokgpwebapi.azurewebsites.net/api/positions/data?userName=user1&currency=BITCOIN'
+    let url = 'https://uokgpwebapi.azurewebsites.net/api/positions/data?userName=' + this.cookieService.get("current-user") + "&currency=BITCOIN";
 
     this.http.get<any>(url, this.httpOptions)
     .subscribe(response => {
       console.log(response)
       this.positions = response
+    });
+  }
 
+  public async updateOnBuy() {
+    let url1 = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/get?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') 
+
+    this.http.get<any>(url1, this.httpOptions)
+    .subscribe(response => {
+      let btc = this.f.positionQuantity.value
+      console.log(response)
+      let url = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/update?username=' 
+      + this.cookieService.get('current-user') + '&portfolio=' 
+      + this.cookieService.get('current-portfolio') 
+      + '&gbp=' + (response.gbp - (btc*7000)) 
+      + '&btc=' + (response.btc + btc)
+     
+      this.http.put<any>(url, this.httpOptions)
+      .subscribe(response => {
+        console.log(response)
+    });
+      
+    });
+  }
+
+  public async updateOnSell() {
+    let url1 = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/get?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') 
+
+    this.http.get<any>(url1, this.httpOptions)
+    .subscribe(response => {
+      let btc = this.f.positionQuantity.value
+      console.log(response)
+      let url = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/update?username=' 
+      + this.cookieService.get('current-user') + '&portfolio=' 
+      + this.cookieService.get('current-portfolio') 
+      + '&gbp=' + (response.gbp + (btc*7000)) 
+      + '&btc=' + (response.btc - btc)
+     
+      this.http.put<any>(url, this.httpOptions)
+      .subscribe(response => {
+        console.log(response)
+    });
+      
     });
   }
 }
