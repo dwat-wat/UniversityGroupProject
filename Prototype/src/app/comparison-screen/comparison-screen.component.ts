@@ -20,78 +20,38 @@ export class ComparisonScreenComponent implements OnInit {
       labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8"],
       datasets: [
         {
-          label: 'Bitcoin Purchased',
-          data: [200, ,550, ,400, ,600, ],
+          label: 'Total Bitcoin Owned',
+          data: [200,350,550,700,400,300,600,845],
           borderColor: '#7c258a',
           backgroundColor: '#7c258a',
           fill: false,
           pointStyle: 'circle',
-          radius: 10,
+          radius: 6,
           rotation: 45,
-          pointBorderWidth: 3,
+          pointBorderWidth: 2,
         
         },
         
-        { 
-          label: 'Bitcoin Sold',
-          data: [ ,350, ,700, ,300, ,845],
-          borderColor: '#7c258a',
-          backgroundColor: '#7c258a',
-          fill: false,
-          pointStyle: 'crossRot',
-          radius: 10,
-          pointBorderWidth: 6,
-        
-        },
 
-        {
-          label: 'Bitcoin Value',
-          data: [200,350,550,700,400,300,600,845],
-          borderColor: '#7c258a',
-          fill: false,
-          pointStyle: 'cross',
-          radius: 0,
-          pointBorderWidth: 0,
-        
-        },
 
         //n1n1n1//
 
         {
-          label: 'Bitcoin Purchased',
-          data: [300, ,650, ,500, ,800, ],
+          label: 'Total Bitcoin Owned',
+          data: [300,200,700,200,500,600,800,945],
           borderColor: '#00ffff',
           backgroundColor: '#00ffff',
           fill: false,
           pointStyle: 'circle',
-          radius: 10,
+          radius: 6,
           rotation: 45,
-          pointBorderWidth: 3,
-        
-        },
-        
-        { 
-          label: 'Bitcoin Sold',
-          data: [ ,400, ,750, ,400, ,945],
-          borderColor: '#00ffff',
-          backgroundColor: '#00ffff',
-          fill: false,
-          pointStyle: 'crossRot',
-          radius: 10,
-          pointBorderWidth: 6,
+          pointBorderWidth: 2,
         
         },
 
-        {
-          label: 'Bitcoin Value',
-          data: [300,400,650,750,500,400,800,945],
-          borderColor: '#00ffff',
-          fill: false,
-          pointStyle: 'cross',
-          radius: 0,
-          pointBorderWidth: 0,
+
+
         
-        }
       ]
     },
     options: {
