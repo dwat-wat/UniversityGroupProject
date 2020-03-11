@@ -1,11 +1,11 @@
 <html>
 
-    <div id="mylinechart" class="canvasContainer" style="text-align: center;"> 
+    <div id="mylinechart" class="canvasContainer" style="text-align: center;">
         <h2>Comparison</h2>
-        <canvas id="lineChart2" ></canvas> 
-        
+        <canvas id="lineChart2" ></canvas>
+
     </div>
-    
+
     <style> #mylinechart{display: none;}
     </style>
 
@@ -14,28 +14,66 @@
     <title> Vortex </title>
 
 <!--<script type="text/javascript">
-    
+
     function fn1()
     {
        var str = document.getElementById("text1").value;
        alert("Comparing with: "+str);
     }
-    
-    
+
+
     </script>
 -->
 
 </head>
 
-<p>comparison-screen works!</p>
+<!-- <p>comparison-screen works!</p> -->
 
 <body>
 
-    <input id="text1" placeholder="Enter Username">
+    <!-- <input id="text1" placeholder="Enter Username"> -->
+    <input type="text" #titleInput placeholder="Enter Username">
     <br>
-    <button (click)="compare()"> Compare!</button>
-    
+    <button (click)="compare(titleInput.value)"> Compare!</button>
+
 </body>
 
+<br><br><br>
+User 1
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Week</th>
+      <th scope="col">Bitcoin Owned</th>
+      <th scope="col">Current Bitcoin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let elem of positionUser1">
+      <td>{{elem.week}}</td>
+      <td>{{elem.bitCoinOwned}}</td>
+      <td>{{elem.currentBitCoinValue}}</td>
+    </tr>
+  </tbody>
+</table>
 
+<br>
+<br>
+User 2
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Week</th>
+      <th scope="col">Bitcoin Owned</th>
+      <th scope="col">Current Bitcoin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let elem of positionUser2">
+      <td>{{elem.week}}</td>
+      <td>{{elem.bitCoinOwned}}</td>
+      <td>{{elem.currentBitCoinValue}}</td>
+    </tr>
+  </tbody>
+</table>
 </html>
