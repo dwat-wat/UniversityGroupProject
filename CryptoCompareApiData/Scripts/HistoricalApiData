@@ -40,7 +40,7 @@ def historicalDataGetter():
             openz.append(float(someData["open"]))
             close.append(float(someData["close"]))
             high.append(float(someData["high"]))
-            low.append(float(someData["low"]))        
+            low.append(float(someData["low"]))   
         addEntities()
         sendEntities()
         last = timez[-1]
@@ -64,6 +64,7 @@ def historicalDataGetter():
             theResponse = json.loads(theApiResponse.content)
         
             for someData in theResponse["Data"]["Data"]:
+                #print(someData)
                 thedate = datetime.datetime(1, 1, 1) + datetime.timedelta(seconds=someData["time"])
                 thedate = thedate.replace(year=thedate.year + 1969)
                 time.append(thedate)
@@ -74,13 +75,14 @@ def historicalDataGetter():
                 low.append(float(someData["low"]))   
             addEntities()
             sendEntities()
-            last = timez[-1]
+            last = timez[0]
             time.clear()
             timez.clear()
             openz.clear()
             close.clear()
             high.clear()
-            low.clear()           
+            low.clear()  
+        
         else:
             print("Did not work, error: ", theApiResponse.status_code)
             
@@ -104,6 +106,7 @@ def addEntities():
         bitcoin = {'PartitionKey': Bitcoinz, 'RowKey': str(t), 'Open': EntityProperty(EdmType.DOUBLE, openz[i]),
                    'Close': EntityProperty(EdmType.DOUBLE, close[i]), 'High': EntityProperty(EdmType.DOUBLE, high[i]),
                    'Low': EntityProperty(EdmType.DOUBLE, low[i]), 'Time': timez[i], 'priority': 200}
+        #print(bitcoin)
         bitcoins.append(bitcoin)
         i += 1
 def sendEntities():
@@ -116,10 +119,10 @@ def sendEntities():
         batch.insert_or_replace_entity(a)
         inBatch += 1
         if inBatch > 99:
-            table_service.commit_batch('CryptoCompareAPIData', batch)
+            table_service.commit_batch('CryptoCompareAPIDataFinal', batch)
             batch = TableBatch()
             inBatch = 0
-    table_service.commit_batch('CryptoCompareAPIData', batch)
+    table_service.commit_batch('CryptoCompareAPIDataFinal', batch)
     batch = TableBatch()
     inBatch = 0
 
