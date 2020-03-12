@@ -20,11 +20,11 @@ last = int
 
 GBP = "GBP"
 
-bitcoinz = "bitcoin"
+Bitcoinz = "BTC"
 
 def historicalDataGetter():
     z = 1
-    while z < 2:
+    for z in range(2):
         theApiUrl = "https://min-api.cryptocompare.com/data/v2/histominute?fsym=BTC&tsym=GBP&limit=2000&api_key=cb2d49b598be23432f235ed0c6fe7d96ee2c6d7e2b6459bb6077cbfa21f0b403"
         print(theApiUrl)
         theApiResponse = requests.get(theApiUrl)
@@ -41,13 +41,22 @@ def historicalDataGetter():
                 close.append(float(someData["close"]))
                 high.append(float(someData["high"]))
                 low.append(float(someData["low"]))            
-            else:
-                print("Did not work, error: ", theApiResponse.status_code)
-            return
-            last = timez[-1]
-            z += 1
+        else:
+            print("Did not work, error: ", theApiResponse.status_code)
+        return
+        addingEntity()
+        sendEntities()
+        last = timez[-1]
+        time.clear()
+        timez.clear()
+        openz.clear()
+        close.clear()
+        high.clear()
+        low.clear()  
+        z += 1
     else:
-        while last != 0:
+        a = 1
+        for a in range(10):
             theApiUrl = "https://min-api.cryptocompare.com/data/v2/histominute?fsym=BTC&tsym=GBP&limit=2000&toTs=" + str(last) + "&api_key=cb2d49b598be23432f235ed0c6fe7d96ee2c6d7e2b6459bb6077cbfa21f0b403"
             print(theApiUrl)
             theApiResponse = requests.get(theApiUrl)
@@ -64,11 +73,19 @@ def historicalDataGetter():
                     close.append(float(someData["close"]))
                     high.append(float(someData["high"]))
                     low.append(float(someData["low"]))            
-                else:
-                    print("Did not work, error: ", theApiResponse.status_code)
-                return
-                last = timez[-1]
-            
+            else:
+                print("Did not work, error: ", theApiResponse.status_code)
+            return
+            addingEntity()
+            sendEntities()
+            last = timez[-1]
+            time.clear()
+            timez.clear()
+            openz.clear()
+            close.clear()
+            high.clear()
+            low.clear()  
+            a += 1
             
 def azureTable():
     # table_service = TableService(account_name='', account_key='')
@@ -78,7 +95,7 @@ def azureTable():
     #table_service.create_table('bitcoinData')
     i = 0
     for t in time:
-        bitcoin = {'PartitionKey': GBP, 'RowKey': str(t), 'Open': EntityProperty(EdmType.DOUBLE, openz[i]),
+        bitcoin = {'PartitionKey': Bitcoinz, 'RowKey': str(t), 'Open': EntityProperty(EdmType.DOUBLE, openz[i]),
                    'Close': EntityProperty(EdmType.DOUBLE, close[i]), 'High': EntityProperty(EdmType.DOUBLE, high[i]),
                    'Low': EntityProperty(EdmType.DOUBLE, low[i]), 'Time': timez[i], 'priority': 200}
         table_service.insert_entity('bitcoinData', bitcoin)
@@ -87,7 +104,7 @@ def azureTable():
 def addingEntity():
      i = 0
      for t in time:
-        bitcoin = {'PartitionKey': GBP, 'RowKey': str(t), 'Open': EntityProperty(EdmType.DOUBLE, openz[i]),
+        bitcoin = {'PartitionKey': Bitcoinz, 'RowKey': str(t), 'Open': EntityProperty(EdmType.DOUBLE, openz[i]),
                    'Close': EntityProperty(EdmType.DOUBLE, close[i]), 'High': EntityProperty(EdmType.DOUBLE, high[i]),
                    'Low': EntityProperty(EdmType.DOUBLE, low[i]), 'Time': timez[i], 'priority': 200}
         bitcoins.append(bitcoin)
@@ -105,12 +122,13 @@ def sendEntities():
         batch.insert_or_replace_entity(a)
         inBatch += 1
         if inBatch > 99:
-            table_service.commit_batch('bitcoinData', batch)
+            table_service.commit_batch('CryptoCompareAPIData', batch)
             batch = TableBatch()
             inBatch = 0
-    table_service.commit_batch('bitcoinData', batch)
+    table_service.commit_batch('CryptoCompareAPIData', batch)
     batch = TableBatch()
     inBatch = 0
+
 
 
 def loopyloop():
@@ -131,4 +149,3 @@ def timingfunction():
 historicalDataGetter()
 addingEntity()
 sendEntities()
-
