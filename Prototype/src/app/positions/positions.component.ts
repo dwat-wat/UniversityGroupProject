@@ -23,6 +23,10 @@ export class PositionsComponent implements OnInit {
 
   data : any;
   positions : any;
+  response : any;
+  btcValue : any;
+  btcValue2 : any;
+  positionQuantity = '';
 
   public positionsForm : FormGroup;
   loading = false;
@@ -91,7 +95,7 @@ export class PositionsComponent implements OnInit {
 
   public async getPositions() {
     
-    let url = 'https://uokgpwebapi.azurewebsites.net/api/positions/data?userName=' + this.cookieService.get("current-user") + "&currency=BITCOIN";
+    let url = 'https://uokgpwebapi.azurewebsites.net/api/positions/portfoliodata?userName=' + this.cookieService.get("current-user") + '&portfolio=' + this.cookieService.get('current-portfolio');
 
     this.http.get<any>(url, this.httpOptions)
     .subscribe(response => {
@@ -101,23 +105,20 @@ export class PositionsComponent implements OnInit {
   }
 
   public async updateOnBuy() {
-    let url1 = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/get?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') 
+    let url = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/get?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') 
 
-    this.http.get<any>(url1, this.httpOptions)
+    this.http.get<any>(url, this.httpOptions)
     .subscribe(response => {
-      let btc = this.f.positionQuantity.value
       console.log(response)
-      let url = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/update?username=' 
-      + this.cookieService.get('current-user') + '&portfolio=' 
-      + this.cookieService.get('current-portfolio') 
-      + '&gbp=' + (response.gbp - (btc*7000)) 
-      + '&btc=' + (response.btc + btc)
+      
+
+      let btc = this.f.positionQuantity.value
+      let url2 = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/update?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') + '&gbp=' + (response.gbp - (btc * 7000)) + '&btc=' + (response.btc + btc)
      
-      this.http.put<any>(url, this.httpOptions)
+      this.http.put<any>(url2, this.httpOptions)
       .subscribe(response => {
         console.log(response)
-    });
-      
+      });
     });
   }
 
@@ -126,19 +127,15 @@ export class PositionsComponent implements OnInit {
 
     this.http.get<any>(url1, this.httpOptions)
     .subscribe(response => {
-      let btc = this.f.positionQuantity.value
       console.log(response)
-      let url = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/update?username=' 
-      + this.cookieService.get('current-user') + '&portfolio=' 
-      + this.cookieService.get('current-portfolio') 
-      + '&gbp=' + (response.gbp + (btc*7000)) 
-      + '&btc=' + (response.btc - btc)
+
+      let btc = this.f.positionQuantity.value
+      let url = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/update?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') + '&gbp=' + (response.gbp + (btc * 7000)) + '&btc=' + (response.btc - btc)
      
       this.http.put<any>(url, this.httpOptions)
       .subscribe(response => {
         console.log(response)
-    });
-      
+      });
     });
   }
 }
