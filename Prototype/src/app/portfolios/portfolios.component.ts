@@ -21,6 +21,7 @@ export class Portfolio{
 export class PortfoliosComponent implements OnInit {
 
   portfolios : Portfolio[]
+  portfoliodata : any
   selected : Portfolio
   submittedCreate : boolean = false;
 
@@ -72,5 +73,13 @@ export class PortfoliosComponent implements OnInit {
     this.selected = p;
     this.cookieService.set('current-portfolio', p.rowKey)
     console.log(this.cookieService.get('current-portfolio'))
+
+    let url = 'https://uokgpwebapi.azurewebsites.net/api/positions/portfoliodata?userName=' + this.cookieService.get("current-user") + "&portfolio=" + p.rowKey;
+
+    this.http.get<any>(url, this.httpOptions)
+    .subscribe(response => {
+      console.log(response)
+      this.portfoliodata = response
+    });
   }
 }

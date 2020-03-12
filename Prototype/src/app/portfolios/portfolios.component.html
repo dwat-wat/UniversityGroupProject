@@ -49,11 +49,32 @@
 </div>
 <br/>
 <br/>
-<div id="selected-portfolio">
+<div  *ngIf="portfoliodata">
     <div *ngIf="selected">
         <h4>Viewing Portfolio: {{selected.rowKey}}</h4>
     </div>
-    <div *ngIf="portfoliodata">
-        Insert a graph here of their portfolio value over time.
+    <div  id="selected-portfolio">
+        <table style="width: 100%">
+            <tr>
+                <th>Type</th>
+                <th>Currency</th>
+                <th>Quantity</th>
+                <th>Time</th>
+            </tr>
+            <tr *ngFor="let position of portfoliodata">
+                <td>
+                    {{position.positionType}}
+                </td>
+                <td>
+                    {{position.partitionKey}}
+                </td>
+                <td>
+                    {{position.quantity}}
+                </td>
+                <td>
+                    {{position.timestamp}}
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
