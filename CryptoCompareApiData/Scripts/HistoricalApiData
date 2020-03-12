@@ -105,7 +105,7 @@ def addEntities():
                    'Close': EntityProperty(EdmType.DOUBLE, close[i]), 'High': EntityProperty(EdmType.DOUBLE, high[i]),
                    'Low': EntityProperty(EdmType.DOUBLE, low[i]), 'Time': timez[i], 'priority': 200}
         bitcoins.append(bitcoin)
-
+        i += 1
 def sendEntities():
     table_service = TableService(
         connection_string='DefaultEndpointsProtocol=https;AccountName=sauokgp;AccountKey=113mdwUqIiqt4K2HonK80HakIOplxYZINmQME5KB1IZfP+v3JHZK64wpoTP5NBFaG0MaO/TVqA0nW4KuCINTow==;EndpointSuffix=core.windows.net')
