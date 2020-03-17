@@ -1,32 +1,49 @@
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+<script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+          $scope.currencies = ["Bitcoin","other"];
+        });
+</script>
 <body>
+    <div class = "socialMedia">
+    <div id = "content" style = "float:left">
+        <h2>Reddit:</h2>
+        <form ng-submit="onSubmit()">
+            <input matInput [matDatepicker]="startDate">
+            <input matInput [matDatepicker]="endDate">
+            <button id = "onSubmit" type="submit" (click) = "getData()">Search</button>
+        </form>
+    </div> 
+    <div  class = "postsTable">
+        <table>
+            <thead>
+                <tr>
+                    <th> Currency </th>
+                    <th> Date </th>
+                    <th> Polarity </th>
+                    <th> Subjectivity </th>
+                </tr>
+
+                <tr class = "rows" *ngFor = "let post of posts">
+                    <td> {{ post.PartitionKey }} </td>
+                    <td> {{ post.Date }} </td>
+                    <td> {{ post.Polarity }} </td>
+                    <td> {{ post.Subjectivity }} </td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <br />
     <div style = "float:right">
         <h2>Recent Tweets:</h2>
         <ngx-twitter-timeline 
             [data]="{sourceType: 'url', url: 'https://twitter.com/CollectorDev'}"
-            [opts]="{tweetLimit: 5}"
+            [opts]="{tweetLimit: 10}"
         ></ngx-twitter-timeline>
     </div>
-    <div style = "float:left">
-            <h2>Reddit:</h2>
-            <table class="table table-striped">
-                    <thead>
-                    <tr>
-                      <th scope="col">Post</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Polarity</th>
-                      <th scope="col">Subjectivity</th>
-                    </tr>
-                    <tr>
-                        <th>https://www.reddit.com/r/Bitcoin/comments/esa8ia/bank_of_england_to_consider_adopting//</th>
-                        <th>1554246000</th>
-                        <th>0.1528361344537815</th>
-                        <th>0.5354907347554407</th>
-                    </tr>
-                    
-                    </thead>
-                    <tbody>
-                    
-                    </tbody>
-                </table>
     </div>
 </body>
+</html>
