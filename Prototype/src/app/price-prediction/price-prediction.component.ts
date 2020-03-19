@@ -50,7 +50,8 @@ export class PricePredictionComponent implements OnInit {
   data: any[] = [];
   linegraphdata: any[] = [];
   showaboutsection: boolean = false;
-  graphview: any[] = [window.innerWidth * 0.8, window.innerHeight*0.5];
+  // graphview: any[] = [window.innerWidth * 0.78, window.innerHeight*0.5];
+  graphview: any[]
   gaugeview: any[] = [window.innerWidth * 0.4, window.innerHeight*0.4];
   colorSchemeGraph = {
     domain: ['#00fe32', '#fe9e00', '#00c4fe', '#6800fe', '#ff00fb']
@@ -89,7 +90,7 @@ export class PricePredictionComponent implements OnInit {
 
   modelTo: NgbDateStruct;
   modelFrom: NgbDateStruct;
-  days = 30;
+  days = 60;
   todate: CustomDate = new CustomDate(new Date());
   fromdate: CustomDate = new CustomDate(new Date(this.todate.date.getTime() - (this.days * 24 * 60 * 60 * 1000)));
   

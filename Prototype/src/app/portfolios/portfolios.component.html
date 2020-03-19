@@ -53,6 +53,7 @@
     <div *ngIf="selected">
         <h4>Viewing Portfolio: {{selected.rowKey}}</h4>
     </div>
+
     <div  id="selected-portfolio">
         <table style="width: 100%">
             <tr>
@@ -76,5 +77,25 @@
                 </td>
             </tr>
         </table>
+    </div>
+    <div *ngIf="cryptodata[0].series.length == 0">
+        Loading graph...
+    </div>
+    <div *ngIf="cryptodata[0].series.length > 0">
+        <ngx-charts-line-chart
+            [view]="view"
+            [scheme]="colorSchemeGraph"
+            [results]="cryptodata"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [autoScale]="autoScale"
+            (select)="onSelect($event)">
+        </ngx-charts-line-chart>
     </div>
 </div>
