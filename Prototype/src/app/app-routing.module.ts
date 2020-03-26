@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { PricePredictionComponent } from './price-prediction/price-prediction.component'
 import { ComparisonScreenComponent } from './comparison-screen/comparison-screen.component'
 import { SocialMediaComponent } from './social-media/social-media.component'
+import { ChatSystemComponent } from './chat-system/chat-system.component'
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'compare',
     component: ComparisonScreenComponent
+  },
+  {
+    path: 'livechat',
+    component: ChatSystemComponent
   },
   {
     path: '**',

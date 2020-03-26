@@ -24,9 +24,8 @@ export class PositionsComponent implements OnInit {
   data : any;
   positions : any;
   response : any;
-  btcValue : any;
+  btc : any;
   btcValue2 : any;
-  positionQuantity = '';
 
   public positionsForm : FormGroup;
   loading = false;
@@ -54,7 +53,9 @@ export class PositionsComponent implements OnInit {
     this.getPositions();
   }
   
-  get f() { return this.positionsForm.controls; }
+  get f() { 
+    return this.positionsForm.controls; 
+  }
 
   onBuy() {
     this.submitted = true;
@@ -83,7 +84,7 @@ export class PositionsComponent implements OnInit {
     req.portfolio = this.cookieService.get('current-portfolio')
 
     
-    let url = 'https://uokgpwebapi.azurewebsites.net/api/positions/insert';
+    let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/positions/insert';
     
     await this.http.post<any>(url, req, this.httpOptions)
     .subscribe(response => {
@@ -92,10 +93,10 @@ export class PositionsComponent implements OnInit {
       }
     });
   }
-
+  
   public async getPositions() {
     
-    let url = 'https://uokgpwebapi.azurewebsites.net/api/positions/portfoliodata?userName=' + this.cookieService.get("current-user") + '&portfolio=' + this.cookieService.get('current-portfolio');
+    let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/positions/portfoliodata?userName=' + this.cookieService.get("current-user") + '&portfolio='+ this.cookieService.get('current-portfolio');
 
     this.http.get<any>(url, this.httpOptions)
     .subscribe(response => {
@@ -104,8 +105,19 @@ export class PositionsComponent implements OnInit {
     });
   }
 
+  // public async getBitcoinData() {
+    
+  //   let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/cryptodata/data?_currency=btc';
+
+  //   this.http.get<any>(url, this.httpOptions)
+  //   .subscribe(response => {
+  //     console.log(response)
+  //     this.btc = response
+  //   });
+  // }
+
   public async updateOnBuy() {
-    let url = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/get?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') 
+    let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/portfolio/get?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio'); 
 
     this.http.get<any>(url, this.httpOptions)
     .subscribe(response => {
@@ -113,7 +125,7 @@ export class PositionsComponent implements OnInit {
       
 
       let btc = this.f.positionQuantity.value
-      let url2 = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/update?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') + '&gbp=' + (response.gbp - (btc * 7000)) + '&btc=' + (response.btc + btc)
+      let url2 = 'https://uokgpvortexwebapi.azurewebsites.net/api/portfolio/update?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') + '&gbp=' + (response.gbp - (btc * 7000)) + '&btc=' + (response.btc + btc);
      
       this.http.put<any>(url2, this.httpOptions)
       .subscribe(response => {
@@ -123,14 +135,14 @@ export class PositionsComponent implements OnInit {
   }
 
   public async updateOnSell() {
-    let url1 = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/get?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') 
+    let url1 = 'https://uokgpvortexwebapi.azurewebsites.net/api/portfolio/get?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio');
 
     this.http.get<any>(url1, this.httpOptions)
     .subscribe(response => {
       console.log(response)
 
       let btc = this.f.positionQuantity.value
-      let url = 'https://uokgpwebapi.azurewebsites.net/api/portfolio/update?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') + '&gbp=' + (response.gbp + (btc * 7000)) + '&btc=' + (response.btc - btc)
+      let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/portfolio/update?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') + '&gbp=' + (response.gbp + (btc * 7000)) + '&btc=' + (response.btc - btc);
      
       this.http.put<any>(url, this.httpOptions)
       .subscribe(response => {

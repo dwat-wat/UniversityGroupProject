@@ -2,10 +2,39 @@
 
 <html>
     <body>
-
-
-
-
+        <br />
+        <br />
+        <br />
+        <div class = "wrapper">
+            <div class = "menu">
+                <p class = "welcome"> Welcome, {{ user }} <b></b></p>
+                <p class = "logout"><a id = "exit" href = "#"> Exit Chat </a></p>
+                <div style = "clear:both"></div>
+            </div>
+             
+            <div class = "chatbox">
+                <div *ngIf = "message">
+                    <!-- <div *ngFor = "let msg of message"> --> -->
+                        <p> {{ user }}: {{ message }} </p>
+                    <!-- </div> --> -->
+                </div>
+            </div>
+             
+            <form class = "form-horizontal" name = "message" [formGroup] = "chatSystemForm">
+                <div>
+                    <div class = "form-group">
+                        <input type = "text" class = "input" formControlName = "sendMessage" id = "sendMessage" placeholder = "Enter message"/>
+                    </div>
+                    
+                    <div class = "form-group">
+                        <button class = "btn" id = "sendMessage" (click) = "onSend()"> Send </button>
+                    </div>
+                </div>
+            </form>
+            <br />
+            <br />
+            <br />
+        </div>
     </body>
 </html>
 
