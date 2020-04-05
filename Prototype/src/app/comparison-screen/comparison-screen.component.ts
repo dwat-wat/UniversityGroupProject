@@ -47,7 +47,7 @@ export class ComparisonScreenComponent implements OnInit {
 
     let twentyWeeksDate = new Date(sDate.getTime() + (7 * 20 *24*60*60*1000));
     if(startDate > endDate){
-      this.errormessage = "Please select a valid Start and End Dates";
+      this.errormessage = "Please select a valid Start and End Date";
     }else if(new Date(endDate) > twentyWeeksDate ){
       this.errormessage = "Please select a range of less than 20 weeks";
     }else{
