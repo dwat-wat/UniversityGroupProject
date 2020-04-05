@@ -1,14 +1,4 @@
 <html>
-
-    <div id="mylinechart" class="canvasContainer" style="text-align: center;">
-        <h2>Comparison</h2>
-        <canvas id="lineChart2" ></canvas>
-
-    </div>
-
-    <style> #mylinechart{display: none;}
-    </style>
-
 <head>
 
     <title> Vortex </title>
@@ -32,48 +22,109 @@
 <body>
 
     <!-- <input id="text1" placeholder="Enter Username"> -->
-    <input type="text" #titleInput placeholder="Enter Username">
+    <table cellpadding="5" border="0">
+      <tr >
+        <td>
+          Enter the user:
+        </td>
+        <td>
+          <input type="text" #titleInput placeholder="Enter Username">
+        </td>
+      </tr>
+      <tr  >
+        <td>
+          Select the Start Date:
+        </td>
+        <td>
+          <input type="date" #inputStartDate >
+        </td>
+      </tr>
+      <tr  >
+        <td>
+          Select the End Date:
+        </td>
+        <td>
+          <input type="date" #inputEndDate>
+        </td>
+      </tr>
+      <tr  >
+        <td>
+          <button (click)="clear()"> Clear</button>
+        </td>
+        <td>
+          <button (click)="compare(titleInput.value, inputStartDate.value, inputEndDate.value)"> Compare!</button>
+        </td>
+      </tr>
+    </table>
+    <h5 style="color:red">{{errormessage}}</h5>
     <br>
-    <button (click)="compare(titleInput.value)"> Compare!</button>
 
+    <div *ngIf="finalOutputVM1 && finalOutputVM2">
+      <!-- <div> -->
+      <table  cellpadding="10"  border="0" style="color:#FFF;">
+        <tr bgcolor="#FF69B4"><th>User 1</th><th>&nbsp;</th></tr>
+        <tr bgcolor="#FF69B4"><td>Account Balance</td><td *ngIf="finalOutputVM1.accountBalance">{{finalOutputVM1.accountBalance}}</td><td *ngIf="!finalOutputVM1.accountBalance">0</td></tr>
+        <tr bgcolor="#FF69B4"><td>Bitcoin Owned</td><td *ngIf="finalOutputVM1.currentOwned">{{finalOutputVM1.currentOwned}}</td><td *ngIf="!finalOutputVM1.currentOwned">0</td></tr>
+      <!-- </table>
+      <br>
+      <table border="0" style="background-color:#0000A0; color:#FFF;"> -->
+        <tr bgcolor="#FFF"><td>&nbsp;</td></tr>
+        <tr bgcolor="#0000A0"><th>User 2</th><th>&nbsp;</th></tr>
+        <tr bgcolor="#0000A0"><td>Account Balance</td><td *ngIf="finalOutputVM2.accountBalance">{{finalOutputVM2.accountBalance}}</td><td *ngIf="!finalOutputVM2.accountBalance">0</td></tr>
+        <tr bgcolor="#0000A0"><td>Bitcoin Owned</td><td *ngIf="finalOutputVM2.currentOwned">{{finalOutputVM2.currentOwned}}</td><td *ngIf="!finalOutputVM2.currentOwned">0</td></tr>
+      </table>
+    </div>
+    
+    <div id="mylinechart" class="canvasContainer" style="text-align: center;">
+        <h2>Comparison</h2>
+        <canvas id="lineChart2" ></canvas>
+
+    </div>
+
+    <style> #mylinechart{display: none;}
+    </style>
+    
 </body>
 
 <br><br><br>
-User 1
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Week</th>
-      <th scope="col">Bitcoin Owned</th>
-      <th scope="col">Current Bitcoin</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let elem of positionUser1">
-      <td>{{elem.week}}</td>
-      <td>{{elem.bitCoinOwned}}</td>
-      <td>{{elem.currentBitCoinValue}}</td>
-    </tr>
-  </tbody>
-</table>
+<div *ngIf="finalOutputVM1">
+  <div style="color:#FF69B4;margin-left: 1px;">User 1</div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Week</th>
+        <th scope="col">Bitcoin Owned</th>
+        <th scope="col">Current Bitcoin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let elem of positionUser1">
+        <td>{{elem.week}}</td>
+        <td>{{elem.bitCoinOwned}}</td>
+        <td>{{elem.currentBitCoinValue}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<br><br>
+<div *ngIf="finalOutputVM2">
+  <div style="color:#0000A0;margin-left: 1px;">User 2</div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Week</th>
+        <th scope="col">Bitcoin Owned</th>
+        <th scope="col">Current Bitcoin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let elem of positionUser2">
+        <td>{{elem.week}}</td>
+        <td>{{elem.bitCoinOwned}}</td>
+        <td>{{elem.currentBitCoinValue}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-<br>
-<br>
-User 2
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Week</th>
-      <th scope="col">Bitcoin Owned</th>
-      <th scope="col">Current Bitcoin</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let elem of positionUser2">
-      <td>{{elem.week}}</td>
-      <td>{{elem.bitCoinOwned}}</td>
-      <td>{{elem.currentBitCoinValue}}</td>
-    </tr>
-  </tbody>
-</table>
 </html>

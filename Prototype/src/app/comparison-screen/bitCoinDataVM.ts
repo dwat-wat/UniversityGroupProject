@@ -4,3 +4,9 @@ export interface BitCoinDataVM {
   timeStamp: Date;
   week: string;
 }
+
+export interface FinalOutputVM {
+  finalResults: BitCoinDataVM[];
+  accountBalance: number;
+  currentOwned: number;
+}
