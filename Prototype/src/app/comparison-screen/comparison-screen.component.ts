@@ -68,8 +68,8 @@ export class ComparisonScreenComponent implements OnInit {
 
       // var str = document.getElementById("text1").textContent;
       // window.alert('Comparing two users results are produced on the graph below '+str);
-      let url = 'https://localhost:44373/api/Bitcoin?user='+ this.currentUser +'&&startD=' + startDate + '&&endD=' + endDate;
-      let url2 = 'https://localhost:44373/api/Bitcoin?user=' + str + '&&startD=' + startDate + '&&endD=' + endDate;
+      let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/Bitcoin?user='+ this.currentUser +'&&startD=' + startDate + '&&endD=' + endDate;
+      let url2 = 'https://uokgpvortexwebapi.azurewebsites.net/api/Bitcoin?user=' + str + '&&startD=' + startDate + '&&endD=' + endDate;
       await this.http.get<FinalOutputVM>(url, this.httpOptions).subscribe(response => {
         this.finalOutputVM1 = null;
         this.finalOutputVM1 = response;
