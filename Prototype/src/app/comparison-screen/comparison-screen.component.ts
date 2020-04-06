@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { BitCoinDataVM, FinalOutputVM } from './bitCoinDataVM';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-comparison-screen',
@@ -18,7 +19,8 @@ export class ComparisonScreenComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private cookieService: CookieService) { }
 
   lineChart: Chart;
 
@@ -36,11 +38,17 @@ export class ComparisonScreenComponent implements OnInit {
   positionUserdata2: number[] = [];
   week: string[] = [];
   errormessage: string;
+  currentUser: string;
   
 
 
   ngOnInit() {
-
+    if (this.cookieService.get('current-user') == ''){
+      this.router.navigate(['/main']);
+    }
+    else{
+      this.currentUser = this.cookieService.get('current-user');
+    }
   }
   async compare(str: string, startDate: Date, endDate: Date) {
     var sDate = new Date(startDate);
@@ -60,13 +68,17 @@ export class ComparisonScreenComponent implements OnInit {
 
       // var str = document.getElementById("text1").textContent;
       // window.alert('Comparing two users results are produced on the graph below '+str);
-      let url = 'https://localhost:44373/api/Bitcoin?user=user1&&startD=' + startDate + '&&endD=' + endDate;
+      let url = 'https://localhost:44373/api/Bitcoin?user='+ this.currentUser +'&&startD=' + startDate + '&&endD=' + endDate;
       let url2 = 'https://localhost:44373/api/Bitcoin?user=' + str + '&&startD=' + startDate + '&&endD=' + endDate;
       await this.http.get<FinalOutputVM>(url, this.httpOptions).subscribe(response => {
+        this.finalOutputVM1 = null;
         this.finalOutputVM1 = response;
+        this.positionUser1 = [];
         this.positionUser1 = response.finalResults;
         this.http.get<FinalOutputVM>(url2, this.httpOptions).subscribe(response => {
+          this.finalOutputVM2 = null;
           this.finalOutputVM2 = response;
+          this.positionUser2 = [];
           this.positionUser2 = response.finalResults;
           this.bindPosition();
         });
@@ -76,6 +88,9 @@ export class ComparisonScreenComponent implements OnInit {
   }
 
   bindPosition() {
+    this.positionUserdata1 = [];
+      this.positionUserdata2 = [];
+      this.week =[];
     if (this.positionUser2.length > this.positionUser1.length) {
       this.positionUser2.forEach( element => {
         this.week.push(element.week);
@@ -151,7 +166,7 @@ export class ComparisonScreenComponent implements OnInit {
 
   clear()
   {
-    document.getElementById("mylinechart").style.display = "hide";
+    document.getElementById("mylinechart").style.display = "none";
     this.finalOutputVM1= null;
     this.finalOutputVM2 = null;
     this.positionUser1 = [];
