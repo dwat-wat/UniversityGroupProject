@@ -179,7 +179,7 @@ def alldata():
                  predictedprices[2][0],
                  nextactual,
                  predictedprices[3])
-    for i in range(0, 20):
+    for i in range(0, 100):
         nextactual = prices[-1]
         get_data_pastdays("histoday?fsym="+CURRENCY+"&tsym=GBP&toTs=" + str(timestamps[-1]) + "&limit=", ndays)
         predictedprices = predict_prices(ndays)

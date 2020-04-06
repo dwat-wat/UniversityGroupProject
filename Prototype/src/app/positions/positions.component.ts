@@ -51,6 +51,7 @@ export class PositionsComponent implements OnInit {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.getPositions();
+    console.log(this.cookieService.get('current-portfolio'));
   }
   
   get f() { 
@@ -60,14 +61,12 @@ export class PositionsComponent implements OnInit {
   onBuy() {
     this.submitted = true;
     this.openPosition("BUY");
-    this.getPositions();
     this.updateOnBuy();
   }
 
   onSell() {
     this.submitted = true;
     this.openPosition("SELL");
-    this.getPositions();
     this.updateOnSell();
   }
 
@@ -91,14 +90,15 @@ export class PositionsComponent implements OnInit {
       if (response["statusCode"] == 200) {
         console.log(req.userName, req.currency, req.quantity, req.positionType, req.timestamp)
       }
+      this.getPositions()
     });
   }
   
   public async getPositions() {
     
-    let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/positions/portfoliodata?userName=' + this.cookieService.get("current-user") + '&portfolio='+ this.cookieService.get('current-portfolio');
+    let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/positions/portfoliodata?userName=' + this.cookieService.get("current-user") + '&portfolio=' + this.cookieService.get('current-portfolio');
 
-    this.http.get<any>(url, this.httpOptions)
+    await this.http.get<any>(url, this.httpOptions)
     .subscribe(response => {
       console.log(response)
       this.positions = response
@@ -122,7 +122,6 @@ export class PositionsComponent implements OnInit {
     this.http.get<any>(url, this.httpOptions)
     .subscribe(response => {
       console.log(response)
-      
 
       let btc = this.f.positionQuantity.value
       let url2 = 'https://uokgpvortexwebapi.azurewebsites.net/api/portfolio/update?username=' + this.cookieService.get('current-user') + '&portfolio=' + this.cookieService.get('current-portfolio') + '&gbp=' + (response.gbp - (btc * 7000)) + '&btc=' + (response.btc + btc);
@@ -151,7 +150,6 @@ export class PositionsComponent implements OnInit {
     });
   }
 }
-
 
 
 

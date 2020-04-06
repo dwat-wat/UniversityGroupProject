@@ -22,10 +22,6 @@ export class ChatSystemComponent implements OnInit {
   response : any;
   message : any;
   
-  // add(messages : string) {
-  //   this.message.push(messages);
-  // }
-  
   public chatSystemForm : FormGroup;
   loading = false;
   submitted = false;
@@ -89,13 +85,15 @@ export class ChatSystemComponent implements OnInit {
 
   public async getMessage() {
     
-    let url = 'https://uokgpwebapi.azurewebsites.net/api/chatsystem/data?history=' + this.f.sendMessage.value;
+    let url = 'https://uokgpwebapi.azurewebsites.net/api/chatsystem/data';
+    //https://uokgpvortexwebapi.azurewebsites.net
+    //https://uokgpwebapi.azurewebsites.net
 
     this.http.get<any>(url, this.httpOptions)
     .subscribe(response => {
       console.log(response)
-      this.message = this.f.sendMessage.value
       console.log(this.f.sendMessage.value)
+      this.message = response
     });
   }
 }

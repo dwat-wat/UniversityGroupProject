@@ -11,14 +11,16 @@
                 <p class = "logout"><a id = "exit" href = "#"> Exit Chat </a></p>
                 <div style = "clear:both"></div>
             </div>
-             
-            <div class = "chatbox">
-                <div *ngIf = "message">
-                    <!-- <div *ngFor = "let msg of message"> --> -->
-                        <p> {{ user }}: {{ message }} </p>
-                    <!-- </div> --> -->
+            
+                <div class = "chatbox">
+                    <cdk-virtual-scroll-viewport itemSize = "400" class = "scroll">
+                    <div *ngIf = "message">
+                        <div *ngFor = "let msg of message">
+                            <p> {{ user }}: {{ msg.history }} </p>
+                        </div>
+                    </div>
+                    </cdk-virtual-scroll-viewport>
                 </div>
-            </div>
              
             <form class = "form-horizontal" name = "message" [formGroup] = "chatSystemForm">
                 <div>

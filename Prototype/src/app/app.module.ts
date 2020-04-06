@@ -29,6 +29,8 @@ import { PricePredictionComponent } from './price-prediction/price-prediction.co
 import { PortfoliosComponent } from './portfolios/portfolios.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ChatSystemComponent } from './chat-system/chat-system.component';
+import { HistoryComponent } from './history/history.component';
+import { ForumComponent } from './forum/forum.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { ChatSystemComponent } from './chat-system/chat-system.component';
     MainComponent,
     PricePredictionComponent,
     PortfoliosComponent,
-    ChatSystemComponent
+    ChatSystemComponent,
+    HistoryComponent,
+    ForumComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +65,7 @@ import { ChatSystemComponent } from './chat-system/chat-system.component';
     MatInputModule,
     NgbModule,
     NgxGaugeModule,
-    ScrollingModule
+    ScrollingModule,
   ],
   providers: [CookieService, MatDatepickerModule],
   bootstrap: [AppComponent]

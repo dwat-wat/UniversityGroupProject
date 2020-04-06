@@ -1,5 +1,6 @@
 # Created by Dexter Watson DAW35
 
+import azure.functions as func
 import requests
 import json
 import datetime
@@ -11,11 +12,8 @@ from azure.cosmosdb.table.tableservice import TableService
 from azure.cosmosdb.table.tablebatch import TableBatch
 from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
 from keras.models import Sequential
-
 import datetime
 import logging
-
-import azure.functions as func
 
 
 # Properties
@@ -87,7 +85,7 @@ def get_data_pastdays(query, ndays):
     response = requests.get(url)
     if response.status_code == 200:
         res = json.loads(response.content)     
-        i = 0;
+        i = 0
         data = res["Data"]["Data"]        
         for n in range(ndays):
             _date = datetime.datetime(1, 1, 1) + datetime.timedelta(seconds=data[i]["time"])
@@ -168,12 +166,12 @@ def main(mytimer: func.TimerRequest) -> None:
         logging.info('The timer is past due!')
 
     logging.info('Python timer trigger function ran at %s', utc_timestamp)
-# Main    
+    try:
+        alldata()
+        uploadentities()
+    except:
+        logging.info("Error!")
 
-try:
-    alldata()
-    uploadentities()
-except:
-    print("Error!")
+
     
 

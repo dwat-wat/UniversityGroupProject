@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
     req.username = this.f.username.value
     req.password = this.f.password.value
     
-    await this.http.post<any>('https://uokgpwebapi.azurewebsites.net/api/administration/login', req, this.httpOptions).subscribe(response => {
+    await this.http.post<any>('https://uokgpvortexwebapi.azurewebsites.net/api/administration/login', req, this.httpOptions).subscribe(response => {
       if (response["statusCode"] == 200){
         this.login.emit(this.f.username.value);
       }

@@ -1,13 +1,12 @@
 
-
 <html>
     <body>
         <div class = "positions">
             <div id = "content">
-                <form class = "form-horizontal" [formGroup] = "positionsForm" >
+                <form class = "form-horizontal" [formGroup] = "positionsForm">
                     <div>
                         <div class = "form-group" >
-                            <button class = "btn" id = "getPortfolioPositions" id = "openPosition" id = "getPosition" id = "updatePositions" (click) = "onBuy()" > BUY </button>
+                            <button class = "btn" id = "openPosition" id = "getPositions" id = "updatePositions" id = "getPortfolioPositions" (click) = "onBuy()" > BUY </button>
                         </div>
 
                         <div class = "form-group">
@@ -15,7 +14,7 @@
                         </div>
                         
                         <div class = "form-group">
-                            <button class = "btn" id = "getPortfolioPositions" id = "openPosition" id = "getPosition" id = "updatePositions" (click) = "onSell()"> SELL </button>
+                            <button class = "btn" id = "openPosition" id = "getPositions" id = "updatePositions" id = "getPortfolioPositions" (click) = "onSell()"> SELL </button>
                         </div> 
                     </div>
                 </form>
@@ -24,37 +23,36 @@
                 <br />
                 <div  class = "positionsTable">
                     <cdk-virtual-scroll-viewport itemSize = "400" class = "scroll">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th> Currency </th>
-                                <th> Quantity </th>
-                                <th> Position Type </th>
-                                <th> Current Price </th>
-                                <th> Date </th>
-                            </tr>
-    
-                            <tr class = "rows" *ngFor = "let pos of positions">
-                                <td> {{ pos.partitionKey }} </td>
-                                <td> {{ pos.quantity }} </td>
-                                <td> {{ pos.positionType }} </td>
-                                <td> 7000 </td>
-                                <td> {{ pos.timeStamp }} </td>
-                            </tr>
-                        </thead>
-                    </table>
-                </cdk-virtual-scroll-viewport>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th> Currency </th>
+                                    <th> Quantity </th>
+                                    <th> Position Type </th>
+                                    <th> Current Price </th>
+                                    <th> Date </th>
+                                </tr>
+                                
+                                <tr class = "rows" *ngFor = "let pos of positions">
+                                    <td> {{ pos.partitionKey }} </td>
+                                    <td> {{ pos.quantity }} </td>
+                                    <td> {{ pos.positionType }} </td>
+                                    <td> 7000 </td>
+                                    <td> {{ pos.timeStamp }} </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </cdk-virtual-scroll-viewport>
                 </div>
                 <br />
                 <br />
             </div>
         </div>
+        <br />
+        <br />
+        <br />
+        <br />
     </body>
 </html>
-
-
-
-
-
 
 

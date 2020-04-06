@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   get user() { return this.cookieService.get('current-user'); }
+  get selectedPortfolio() { return this.cookieService.get('current-portfolio'); }
 
   onClickLogout(){
     this.cookieService.delete('current-user');
