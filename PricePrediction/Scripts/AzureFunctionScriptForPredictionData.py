@@ -1,6 +1,5 @@
 # Created by Dexter Watson DAW35
 
-import azure.functions as func
 import requests
 import json
 import datetime
@@ -11,10 +10,8 @@ from sklearn.linear_model import LinearRegression
 from azure.cosmosdb.table.tableservice import TableService
 from azure.cosmosdb.table.tablebatch import TableBatch
 from azure.cosmosdb.table.models import Entity, EntityProperty, EdmType
+from azure.storage.blob import BlobServiceClient
 from keras.models import Sequential
-import datetime
-import logging
-
 
 # Properties
 apikey = '57b9285261bf74807812697d0aa133456f7b0054c5fd040b232003cd4b22de3f'
@@ -29,6 +26,9 @@ filesforblob = []
 entities = []
 
 CURRENCY = 'BTC'
+
+
+# Classes
 
 # Functions
 
@@ -85,7 +85,7 @@ def get_data_pastdays(query, ndays):
     response = requests.get(url)
     if response.status_code == 200:
         res = json.loads(response.content)     
-        i = 0
+        i = 0;
         data = res["Data"]["Data"]        
         for n in range(ndays):
             _date = datetime.datetime(1, 1, 1) + datetime.timedelta(seconds=data[i]["time"])
@@ -157,21 +157,15 @@ def uploadentities():
     print("Batch sent!")
     batch = TableBatch()
     inBatch = 0
+        
+    
 
-def main(mytimer: func.TimerRequest) -> None:
-    utc_timestamp = datetime.datetime.utcnow().replace(
-        tzinfo=datetime.timezone.utc).isoformat()
+# Main    
 
-    if mytimer.past_due:
-        logging.info('The timer is past due!')
-
-    logging.info('Python timer trigger function ran at %s', utc_timestamp)
-    try:
-        alldata()
-        uploadentities()
-    except:
-        logging.info("Error!")
-
-
+try:
+    alldata()
+    uploadentities()
+except:
+    print("Error!")
     
 

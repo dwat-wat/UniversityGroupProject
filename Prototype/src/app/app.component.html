@@ -21,11 +21,12 @@
   <div class="spacer"></div>
   <a style="color: white;" href="/compare">Compare</a>
   <div class="spacer"></div>
-  <h1>
-    <a class="underlineHover" style="color: white;"  *ngIf="user != ''" href="/account" >{{user}}</a>
+  <h1 style="font-size: 100%;"  *ngIf="user != ''">
+    <a style="font-weight: bold; color: white;" class="underlineHover" href="/account" >{{user}}</a>
+    <p style="color: white; ">{{selectedPortfolio}}</p>
   </h1>
   <a class="underlineHover" style="color: white;"  *ngIf="user != ''" href="/home" (click)="onClickLogout()">(Logout)</a>
-
+  
   <a aria-label="Angular on twitter" target="_blank" rel="noopener" href="https://twitter.com/angular" title="Twitter">
     <svg id="twitter-logo" height="24" data-name="Logo — FIXED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
       <defs>

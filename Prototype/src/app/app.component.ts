@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title     = 'Vortex';
+  selectedPortfolio = '';
 
   constructor(private router: Router, private cookieService: CookieService){}
 
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
     if(this.user == ''){
       this.router.navigate(['/main']);
     }
+    this.selectedPortfolio = this.cookieService.get('current-portfolio')
     // if(usercookie == ''){
     //   this.currentview = 'login';
     // }

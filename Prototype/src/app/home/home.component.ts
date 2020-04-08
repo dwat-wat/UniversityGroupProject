@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
     console.log(_loggedin)
     console.log(this.cookieService.get('current-user'))
     this.cookieService.set('current-user', this.loggedin);
+    this.cookieService.set('current-portfolio', 'default')
     console.log(this.cookieService.get('current-user'))
     this.router.navigate(['/main']);
   }
