@@ -1,4 +1,6 @@
 
+#   DK315  
+
 import azure.functions as func
 import praw
 import re
@@ -9,7 +11,7 @@ from azure.cosmosdb.table.models import Entity
 import logging  
 from datetime import datetime, timedelta
 import time
- 
+
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     startDate = req.params.get('startDate')
@@ -29,12 +31,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         negatives = ['fall','drop','unstable','tank','panic','bearish']
 
         table_service = TableService(account_name='sauokgp', account_key='113mdwUqIiqt4K2HonK80HakIOplxYZINmQME5KB1IZfP+v3JHZK64wpoTP5NBFaG0MaO/TVqA0nW4KuCINTow==')
-
         #creates Reddit table if one doesn't already exist
         if not(table_service.exists('Reddit')):
             table_service.create_table('Reddit',fail_on_exist=False)
-
-
         reddit = praw.Reddit(client_id = 'sCanLl76vO0ExA',
                             client_secret = '54qOmHpy2PBRLTVs8soyBhif42A',
                             user_agent = 'CryptoCollector')
@@ -44,22 +43,27 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         startDate = datetime.strptime(startDate,"%Y-%m-%d")
         endDate = datetime.strptime(endDate,"%Y-%m-%d")
 
+        posts = []
+        
         while startDate<endDate:
             d1 = int(time.mktime(startDate.timetuple()))
             d2 = int(time.mktime((startDate + timedelta(days=1)).timetuple()))
 
-            gen = api.search_submissions(before=d2,after=d1,subreddit = currency,limit = 10,sort_type ='score')
+            gen = api.search_submissions(before=d2,after=d1,subreddit = currency,limit = 5,sort_type ='score')
             results = list(gen)
+
+            #creates Reddit table if one doesn't already exist
+            if not(table_service.exists('Reddit')):
+                table_service.create_table('Reddit',fail_on_exist=False)
 
             highest_polarity = -1
             lowest_polarity = 1
             total_polarity = 0
             total_subjectivity = 0
-            count = 0
-            posts = []
+            count = 0   
 
-            for i in results:
-                submission = reddit.submission(id=i)
+            for x in results:
+                submission = reddit.submission(id=x.id)
                 sentiment = TextBlob(submission.title)
                 polarity = sentiment.sentiment.polarity
                 subjectivity = sentiment.sentiment.subjectivity
@@ -72,11 +76,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     polarity = 1
                 if negative > positive:
                     polarity = -1
-                if polarity != 0:
+                if polarity != 0:   
                     total_polarity+=polarity
                     total_subjectivity+=subjectivity
-                    count+=1 
-                  
+                    count+=1
                 print('=============================')
                 print('Total Polarity: ' + str(total_polarity))
                 print('Number of Posts: ' + str(count))
@@ -85,9 +88,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     total_polarity = total_polarity/count
                 print('Reddit Polarity Rating: ' + str(total_polarity))
                 print('=============================')
-                post = {'PartitionKey': currency,'RowKey': submission.id,'Polarity': total_polarity, 'Subjectivity': total_subjectivity,'Date': submission.created_utc}
-                        #print(post)
+            post = {'PartitionKey': currency,'RowKey': str(datetime.now()),'Polarity': total_polarity, 'Subjectivity': total_subjectivity, 'Date': str(startDate)}
             posts.append(post)
+            table_service.insert_entity('Reddit', post)   
             startDate = startDate + timedelta(days=1)
             #return func.HttpResponse(posts)
         return str(posts)
