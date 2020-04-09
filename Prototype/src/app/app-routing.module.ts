@@ -6,7 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { PricePredictionComponent } from './price-prediction/price-prediction.component'
 import { ComparisonScreenComponent } from './comparison-screen/comparison-screen.component'
 import { SocialMediaComponent } from './social-media/social-media.component'
-import { ChatSystemComponent } from './chat-system/chat-system.component'
+import { ForumComponent } from './forum/forum.component'
+import { HistoryComponent } from './history/history.component'
 
 const routes: Routes = [
   {
@@ -34,8 +35,12 @@ const routes: Routes = [
     component: ComparisonScreenComponent
   },
   {
-    path: 'livechat',
-    component: ChatSystemComponent
+    path: 'forum',
+    component: ForumComponent
+  },
+  {
+    path: 'history',
+    component: HistoryComponent
   },
   {
     path: '**',
