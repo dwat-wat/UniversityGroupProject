@@ -103,18 +103,19 @@ export class PortfoliosComponent implements OnInit {
   }
 
   selectPortfolio(p){
-    console.log(p)
     this.selected = p;
     this.cookieService.set('current-portfolio', p.rowKey)
-    console.log(this.cookieService.get('current-portfolio'))
-
     let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/positions/portfoliodata?userName=' + this.cookieService.get("current-user") + "&portfolio=" + p.rowKey;
 
     this.http.get<any>(url, this.httpOptions)
     .subscribe(response => {
-      console.log(response)
       this.portfoliodata = response
     });
+
+    this.http.get<any>('https://uokgpvortexwebapi.azurewebsites.net/api/portfolio/get?username=' + this.cookieService.get("current-user") + "&portfolio=" + p.rowKey)
+    .subscribe(response => {
+      console.log(response)
+    })
 
     this.getData()
   }

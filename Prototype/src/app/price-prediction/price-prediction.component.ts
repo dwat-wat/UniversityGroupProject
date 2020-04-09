@@ -112,7 +112,7 @@ export class PricePredictionComponent implements OnInit {
   }
 
   async getData(){
-    await this.http.get<any>('https://uokgpwebapi.azurewebsites.net/api/Prediction/data?_currency=BTC&_from='+this.fromdate.date.toISOString()+'&_to='+this.todate.date.toISOString()).subscribe(
+    await this.http.get<any>('https://uokgpvortexwebapi.azurewebsites.net/api/Prediction/data?_currency=BTC&_from='+this.fromdate.date.toISOString()+'&_to='+this.todate.date.toISOString()).subscribe(
       response => {
         this.configureGauge(response[response.length-1], response[response.length-2])
         console.log(response)

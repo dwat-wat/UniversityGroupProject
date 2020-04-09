@@ -4,11 +4,44 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpResponse } from '@angular/common/http'
 import { HttpHeaders } from '@angular/common/http';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 
-export class RedditRequest {
-  startDate: string
-  endDate: string
-  currency: string
+export class barChartData{
+  constructor(_name: string){
+    this.name = _name;
+    this.series = [];
+  }
+  name: string;
+  series: ChartData[];
+}
+
+export class ChartData{
+  constructor(_name: string, _value: string){
+    this.name = _name;
+    this.value = _value;
+  }
+  name: string;
+  value: string;
+}
+
+export class CustomDate{
+  constructor(_date: Date){
+    this.date = _date;
+    this.year = this.date.getFullYear();
+    this.month = this.date.getMonth();
+    this.day = this.date.getDate();
+    this.shortdate = this.year + '-' + this.month + '-' + this.day;
+  }
+
+  date: Date;
+  shortdate: string;
+  year: number; 
+  month: number; 
+  day: number;
+
+  getTime(){
+    return this.date.toISOString();
+  }
 }
 
 @Component({
@@ -18,6 +51,7 @@ export class RedditRequest {
 })
 export class SocialMediaComponent implements OnInit {
   posts : any;
+  bargraphdata: any[] = [];
   showaboutsection: boolean = false;
   graphview: any[] = [window.innerWidth * 0.8, window.innerHeight*0.6];
   colorSchemeGraph = {
@@ -26,22 +60,23 @@ export class SocialMediaComponent implements OnInit {
   legend = false;
   legendPosition: string = 'below';
   // line, area
-  autoScale = true;
   gradient = true
   showXAxis = true
   showYAxis = true
   showLegend = false
   showXAxisLabel = true
   showYAxisLabel = true
+  fromdate: CustomDate = new CustomDate(new Date());
+  todate: CustomDate = new CustomDate(new Date());
   xAxisLabel = "Date"
   yAxisLabel = "Polarity"
   @Output() socialMedia = new EventEmitter<boolean>();
   multi: any[]; 
   view: any[] = [700, 300];
-
-  startDate = '' 
-  endDate = ''
-  
+  startDate: CustomDate = new CustomDate(new Date());
+  endDate: CustomDate = new CustomDate(new Date());
+  modelTo: NgbDateStruct;
+  modelFrom: NgbDateStruct;
   
   
 
@@ -59,18 +94,26 @@ export class SocialMediaComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private calendar: NgbCalendar,
     private http: HttpClient) {
      }
     private lineChart: Chart;
-  ngOnInit() {
-    this.getData();
 
-    this.socialMediaForm = this.formBuilder.group({
-      currency: ['', Validators.required],
-      StartDate: ['', Validators.required],
-      EndDate: ['', Validators.required]
-    });
+
+    async onFromDateChange(e){
+      console.log(e)
+      this.fromdate = new CustomDate(new Date(e.year, e.month, e.day));
+      this.todate = new CustomDate(new Date(this.fromdate.date.getTime() + (7 * 24 * 60 * 60 * 1000)));
+      console.log(this.fromdate)
+      console.log(this.todate)
+      //await this.getData();
+    }
+
+  ngOnInit() {
     // get return url from route parameters or default to '/'
+    this.todate = new CustomDate(new Date(new Date().getTime()));
+    this.fromdate = new CustomDate(new Date(this.todate.date.getTime() - (7 * 24 * 60 * 60 * 1000)));
+    this.getData();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
   get f() { return this.socialMediaForm.controls; }
@@ -80,19 +123,27 @@ export class SocialMediaComponent implements OnInit {
     this.getData()
   }
 
+  onToggleAbout(){
+    this.showaboutsection = !this.showaboutsection;
+  }
+  
   public async getData() {
-    this.submitted = true;      
+    this.submitted = true;  
+    this.bargraphdata = [];    
     //console.log(this.f.startDate.value + this.f.endDate.value);
-    let req = new RedditRequest();
-    req.startDate = this.startDate
-    req.endDate = this.endDate
-    req.currency = "Bitcoin"
-    //this.lineChart.data.labels = [req.startDate,req.endDate]
-    //await this.http.get<any>("https://uokgpsocialmediaapp.azurewebsites.net/api/HttpTrigger?code=EaVLGEFHg6jys0omI6TKvQ740/FhhJCaHYB3VuV2c72CHPZVh5JBkA==",  this.httpOptions).subscribe(response => {
-    await this.http.get<any>("https://uokgpsocialmediaapp.azurewebsites.net/api/HttpTrigger?code=EaVLGEFHg6jys0omI6TKvQ740/FhhJCaHYB3VuV2c72CHPZVh5JBkA==&startDate=2019-02-01&endDate=2019-02-11&currency=bitcoin", this.httpOptions).subscribe(response => {
+    this.bargraphdata.push(new barChartData("Polarity"));
+    
+    await this.http.get<any>("https://uokgpsocialmediaapp.azurewebsites.net/api/HttpTrigger?code=EaVLGEFHg6jys0omI6TKvQ740/FhhJCaHYB3VuV2c72CHPZVh5JBkA==&startDate=" + this.fromdate.shortdate + "&endDate=" + this.todate.shortdate + "&currency=bitcoin", this.httpOptions).subscribe(response => {
       console.log(response)
       this.posts = response
-
+      for(var j = 0; j < response.length; j++){
+        var d = (response[j]["Date"]);
+        var v = (response[j]["Polarity"]);
+        console.log(d)
+        console.log(v)
+        var chd = new ChartData(d, v);
+        this.bargraphdata[0]["series"].push(chd);
+      }
     if (response["statusCode"] == 200) {
       console.log(response)
     }

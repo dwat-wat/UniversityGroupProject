@@ -8,16 +8,56 @@
         });
 </script>
 <body>
-    <div class = "socialMedia">
-    <div id = "content" style = "float:left">
-        <h2>Reddit:</h2>
-        <form ng-submit="onSubmit()">
-            <input matInput [matDatepicker]="startDate">
-            <input matInput [matDatepicker]="endDate">
-            <button id = "onSubmit" type="submit" (click) = "getData()">Search</button>
-        </form>
-    </div> 
-    <div  class = "postsTable">
+<div id = "socialMedia" style="margin: 1%">
+    <div style = "float: left; width: 20%;">
+        <h2>Reddit Data</h2>
+        <h3>Date:{{fromdate.shortdate}}</h3>
+        <ngb-datepicker #dpfrom [(ngModel)]="modelFrom" (ngModelChange)="onFromDateChange($event)" (navigate)="fromdate = $event.next"></ngb-datepicker>
+        <div style = "width:100%">
+            <button id = "onSubmit" style= "width:40%;" type="submit" (click) = "getData()">Search</button>
+            <button id = "onAbout"  style= "width:40%;" (click) = "onToggleAbout()">About</button>
+        </div> 
+    </div>  
+    <div id="about" style="float: left; width: 50%; padding: 2%;" *ngIf="showaboutsection">
+        <div>
+            <h2>About the Social Media Page</h2>
+            <h3>Reddit</h3>
+            <p>
+                The Reddit feature searches Reddit for the top 5 posts per day for that currency, and analyses these posts to provde an avarage polarity score for each day. Polarity is calculated by analysying the language used in the title of the Reddit post, and looking for key words which are typically positive or negative. For example, the word 'terrible' would have a low polarity score. The scale for polarity is -1 to +1. It analyses the week ahead of the date selected, so if you select 1st April, it will get data from 1st April - 7th April. This information is displayed on a bar chart.
+            </p>
+            <h3>Twitter</h3>
+            <p>
+                Our Twitter feed provides up to date information about user activity on Twitter for the hashtag: #Bitcoin. Our research has found evidence to suggest a correlation between the volume of tweets and the volatility of the price.
+            </p>    
+            <h3>Disclaimer</h3>
+            <p>
+                You may use the information on this page to assist in making trading decisions, but this information is not reflective of the price and should not be considered as such. 
+            </p>
+        </div>
+    </div>    
+    <div style = "float: right; width: 20%;">
+        <h2>Twitter Updates:</h2>
+        <ngx-twitter-timeline 
+            [data]="{sourceType: 'url', url: 'https://twitter.com/CollectorDev'}"
+            [opts]="{tweetLimit: 10}"
+        ></ngx-twitter-timeline>
+    </div>
+    <div class = "graph" style = "float:centre;width:50%" *ngIf="bargraphdata[0].series.length > 0">
+        <ngx-charts-bar-vertical-2d
+            [view]="view"
+            [scheme]="colorSchemeGraph"
+            [results]="bargraphdata"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel">
+        </ngx-charts-bar-vertical-2d>
+    </div>
+    <!--<div  class = "postsTable" style = "float:left">
         <table>
             <thead>
                 <tr>
@@ -36,14 +76,7 @@
             </thead>
         </table>
     </div>
-    <br />
-    <div style = "float:right">
-        <h2>Recent Tweets:</h2>
-        <ngx-twitter-timeline 
-            [data]="{sourceType: 'url', url: 'https://twitter.com/CollectorDev'}"
-            [opts]="{tweetLimit: 10}"
-        ></ngx-twitter-timeline>
-    </div>
+-->
     </div>
 </body>
 </html>
