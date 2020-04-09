@@ -16,7 +16,7 @@ export class SignUpRequest {
   styleUrls: ['./sign-up.component.sass']
 })
 export class SignUpComponent implements OnInit {
-  @Output() login = new EventEmitter<boolean>();
+  @Output() login = new EventEmitter<any>();
   @Output() signup = new EventEmitter<boolean>();
   
   public signupForm: FormGroup;
@@ -65,8 +65,12 @@ export class SignUpComponent implements OnInit {
     await this.http.post<any>('https://uokgpvortexwebapi.azurewebsites.net/api/accounts/new', req, this.httpOptions).subscribe(response => {
     console.log(req)
         
+    let obj = new Object()
+    obj["userName"] = req.username
+    obj["selectedPortfolio"] = "DEFAULT"
+
     if (response["statusCode"] == 201){
-        this.login.emit(this.f.username.value);
+        this.login.emit(obj);
         console.log(response["statusCode"]);  
       }
       else{
