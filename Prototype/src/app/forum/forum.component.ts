@@ -43,6 +43,7 @@ export class ForumComponent implements OnInit {
       reply: ['', Validators.required]
     });
     this.getQuestions();
+    this.getReply();
   }
   
   get f() { return this.createForumForm.controls; }
