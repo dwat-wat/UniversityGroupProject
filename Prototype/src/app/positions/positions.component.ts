@@ -156,16 +156,3 @@ export class PositionsComponent implements OnInit {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-

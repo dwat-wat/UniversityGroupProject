@@ -95,8 +95,6 @@
             </form>
         </div>
         <br/>
-        <br/>
-        <br/>
         <div class = "questions">
             <div *ngIf = "!questions">
                 Loading...
@@ -112,20 +110,18 @@
         <br/>
         <br/>
         <div class = "ForumReplies">
-            <form class = "form-horizontal" [formGroup] = "createForumForm" (ngSubmit) = "onCreateSubmit()">
+            <form class = "form-horizontals" [formGroup] = "createForumForm" (ngSubmit) = "onCreateSubmit()">
                 <div *ngIf = "questiondata">
                     <div *ngIf = "selected">
                         <h4> Viewing replies for question: {{ selected.question }} </h4>
                         <br/>
-                        <br/>
                         <h4> Replies: </h4>
-                        <div class = "form-group">
+                        <div class = "form-groups">
                             <input type = "text" formControlName = "reply" class = "form-control" placeholder = "Enter Reply">
 
-                            <div class = "form-group">
+                            <div class = "form-groups">
                                 <button type = "submit" class = "btn" style = "margin-bottom: 5px;"> POST </button>   
                             </div>
-                            <br/>
                             <br/>
                         </div>
                     </div>
