@@ -16,7 +16,7 @@ export class LoginRequest {
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-  @Output() login = new EventEmitter<boolean>();
+  @Output() login = new EventEmitter<any>();
   @Output() signup = new EventEmitter();
   
   public loginForm: FormGroup;
@@ -62,9 +62,12 @@ export class LoginComponent implements OnInit {
     req.username = this.f.username.value
     req.password = this.f.password.value
     
-    await this.http.post<any>('https://uokgpvortexwebapi.azurewebsites.net/api/accounts/login', req, this.httpOptions).subscribe(response => {
+    await this.http.post<any>('https://uokgpvortexwebapi.azurewebsites.net/api/accounts/login', req, this.httpOptions).subscribe(async response => {
       if (response["statusCode"] == 200){
-        this.login.emit(this.f.username.value);
+        await this.http.get('https://uokgpvortexwebapi.azurewebsites.net/api/accounts/details?region=UK&username=' + req.username).subscribe(response2 =>{
+          console.log(response2)
+          this.login.emit(response2);
+        })
       }
       else{
         console.log("failed login: ")

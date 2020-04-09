@@ -19,13 +19,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onLogin(_loggedin: string){
-    this.loggedin = _loggedin;
-    console.log(this.loggedin)
-    console.log(_loggedin)
-    console.log(this.cookieService.get('current-user'))
-    this.cookieService.set('current-user', this.loggedin);
-    this.cookieService.set('current-portfolio', 'default')
+  onLogin(loginResponse){
+    this.loggedin = loginResponse["userName"];
+    console.log(loginResponse["userName"])
+    this.cookieService.set('current-user', loginResponse["userName"]);
+    this.cookieService.set('current-portfolio', loginResponse["selectedPortfolio"])
     console.log(this.cookieService.get('current-user'))
     this.router.navigate(['/main']);
   }
