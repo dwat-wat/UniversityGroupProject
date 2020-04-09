@@ -60,14 +60,12 @@ export class PositionsComponent implements OnInit {
   onBuy() {
     this.submitted = true;
     this.openPosition("BUY");
-    this.getPositions();
     this.updateOnBuy();
   }
 
   onSell() {
     this.submitted = true;
     this.openPosition("SELL");
-    this.getPositions();
     this.updateOnSell();
   }
 
@@ -91,6 +89,7 @@ export class PositionsComponent implements OnInit {
       if (response["statusCode"] == 200) {
         console.log(req.userName, req.currency, req.quantity, req.positionType, req.timestamp)
       }
+      this.getPositions()
     });
   }
   
@@ -98,7 +97,7 @@ export class PositionsComponent implements OnInit {
     
     let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/positions/portfoliodata?userName=' + this.cookieService.get("current-user") + '&portfolio='+ this.cookieService.get('current-portfolio');
 
-    this.http.get<any>(url, this.httpOptions)
+    await this.http.get<any>(url, this.httpOptions)
     .subscribe(response => {
       console.log(response)
       this.positions = response
