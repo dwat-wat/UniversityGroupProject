@@ -6,7 +6,9 @@
         <br />
         <br />
         <div>
-            <h1> History </h1>
+            <h1 class = "title"> History </h1>
+            <br />
+            <br />
                 <div  class = "transactionsTable">
                     <div *ngIf = "positions">
                         <cdk-virtual-scroll-viewport itemSize = "400" class = "scroll">
@@ -16,14 +18,12 @@
                                         <th> Currency </th>
                                         <th> Quantity </th>
                                         <th> Position Type </th>
-                                        <th> Current Price </th>
                                         <th> Date </th>
                                     </tr>
                                     <tr class = "rows" *ngFor = "let pos of positions">
                                         <td> {{ pos.partitionKey }} </td>
                                         <td> {{ pos.quantity }} </td>
                                         <td> {{ pos.positionType }} </td>
-                                        <td> 7000 </td>
                                         <td> {{ pos.timeStamp }} </td>
                                     </tr>
                                 </thead>

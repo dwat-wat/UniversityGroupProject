@@ -1,89 +1,12 @@
 
-<!-- <div id = "ForumOptions">
-    <form class = "form-horizontal" [formGroup] = "createForumForm" (ngSubmit) = "onCreateSubmit()">
-        <br />
-        <br />
-        <h4> Forum </h4>
-        <br />
-        <br />
-        <h4> Questions: </h4>
-        <div class = "form-group">
-            <input type = "text" formControlName = "question" class = "form-control" 
-            [ngClass]="{ 'is-invalid': submittedCreate && f.question.errors }" 
-            placeholder = "Enter question">
-            
-            <div *ngIf = "submittedCreate && f.question.errors" class = "invalid-feedback">
-              <div *ngIf = "f.question.errors.required"> A question is required </div>
-            </div>
-        </div>
-
-        <div class = "form-group">
-          <button type = "submit" class = "btn" style = "margin-bottom: 5px;"> POST </button>   
-        </div>
-    
-<br/>
-<br/>
-<br/>
-<div id = "questions">
-    <div *ngIf = "!questions">
-        Loading...
-    </div>
-    <table *ngIf = "questions" style = "width: 100%;">
-        <th> Questions </th>
-    
-        <tr *ngFor = "let question of questions">
-            <td><a (click) = "selectQuestion(question)" style = "cursor: pointer;"> {{ question.question }} </a></td>
-            <td> {{ question.question }} </td>
-        </tr>
-    </table>
-</div>
-<br/>
-<br/>
-
-<div *ngIf = "questiondata">
-    <div *ngIf = "selected">
-        <h4> Viewing replies for question: {{ selected.question }} </h4>
-        <h4> Replies: </h4>
-        <div class = "form-group">
-            <input type = "text" formControlName = "reply" class = "form-control" 
-            [ngClass] = "{ 'is-invalid': submittedCreate && f.reply.errors }"
-            placeholder = "Enter Reply">
-            
-            <div *ngIf = "submittedCreate && f.reply.errors" class = "invalid-feedback">
-                <div *ngIf = "f.reply.errors.required"> A reply is required </div>
-            </div>
-            <br/>
-            <br/>
-        </div>
-    </div>
-</div>
-</form>
-</div>
-<br/>
-<br/>
-<div id = "selected-question">
-    <table style = "width: 100%">
-        <tr>
-            <th> Replies </th>
-        </tr>
-        <tr *ngFor = "let question of questiondata">
-            <td>
-                {{ question.reply }}
-            </td>
-        </tr>
-    </table>
-</div> -->
-
-
 <html>
     <body>
         <div class = "ForumQuestions">
             <form class = "form-horizontal" [formGroup] = "createForumForm" (ngSubmit) = "onCreateSubmit()">
-                <br />
-                <br />
-                <h4> Forum </h4>
-                <br />
-                <br />
+                <br/>
+                <br/>
+                <h2 class = "title"> Forum </h2>
+                <br/>
                 <h4> Question: </h4>
                 <div class = "form-group">
                     <input type = "text" formControlName = "question" class = "form-control" placeholder = "Enter question">
@@ -112,18 +35,16 @@
         <div class = "ForumReplies">
             <form class = "form-horizontal" [formGroup] = "createForumForm" (ngSubmit) = "onCreateSubmit()">
                 <div *ngIf = "questiondata">
-                    <div *ngIf = "selected">
-                        <h4> Viewing replies for question: {{ selected.question }} </h4>
-                        <br/>
-                        <h4> Replies: </h4>
-                        <div class = "form-group">
-                            <input type = "text" formControlName = "reply" class = "form-control" placeholder = "Enter Reply">
+                    <h4> Viewing replies for question: how much is bitcoin  </h4>
+                    <br/>
+                    <h4> Reply: </h4>
+                    <div class = "form-group">
+                        <input type = "text" formControlName = "reply" class = "form-control" placeholder = "Enter Reply">
 
-                            <div class = "form-group">
-                                <button type = "submit" class = "btn" style = "margin-bottom: 5px;"> POST </button>   
-                            </div>
-                            <br/>
+                        <div class = "form-group">
+                            <button type = "submit" id = "getQuestions" id = "getReply" class = "btn" style = "margin-bottom: 5px;"> POST </button>   
                         </div>
+                        <br/>
                     </div>
                 </div>
             </form>

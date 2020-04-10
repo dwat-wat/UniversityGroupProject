@@ -43,10 +43,15 @@ export class ForumComponent implements OnInit {
       reply: ['', Validators.required]
     });
     this.getQuestions();
-    this.getReply();
   }
   
-  get f() { return this.createForumForm.controls; }
+  get f() { 
+    return this.createForumForm.controls; 
+  }
+  
+  get user() {
+    return this.cookieService.get('current-user');
+  }
 
   async getQuestions(){
     let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/forum/data';
@@ -82,12 +87,16 @@ export class ForumComponent implements OnInit {
     
     await this.http.post<any>(url, req, this.httpOptions)
     .subscribe(response => {
-      this.getQuestions()
+      console.log(response);
+      console.log(this.selectQuestion(req.question));
       
       if (response["statusCode"] == 200) {
         console.log(req.userName, req.question, req.reply, req.timestamp)
         console.log(response);
       }
+      
+      this.selectQuestion(req.question)
+      this.getQuestions()
     });
   }
 
