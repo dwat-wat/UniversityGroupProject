@@ -8,6 +8,8 @@ import { ComparisonScreenComponent } from './comparison-screen/comparison-screen
 import { SocialMediaComponent } from './social-media/social-media.component'
 import { ForumComponent } from './forum/forum.component'
 import { HistoryComponent } from './history/history.component'
+import { HistoricGraphComponent } from './Historic Graph/historicgraph.component'
+import { GraphComponent } from './graph/graph.component'
 
 const routes: Routes = [
   {
@@ -41,6 +43,14 @@ const routes: Routes = [
   {
     path: 'history',
     component: HistoryComponent
+  },
+  {
+    path: 'historicgraph',
+    component: HistoricGraphComponent
+  },
+  {
+    path: 'graph',
+    component: GraphComponent
   },
   {
     path: '**',
