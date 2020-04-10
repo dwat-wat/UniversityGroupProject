@@ -31,6 +31,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ChatSystemComponent } from './chat-system/chat-system.component';
 import { HistoryComponent } from './history/history.component';
 import { ForumComponent } from './forum/forum.component';
+import { HistoricGraphComponent } from './Historic Graph/historicgraph.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ForumComponent } from './forum/forum.component';
     PortfoliosComponent,
     ChatSystemComponent,
     HistoryComponent,
-    ForumComponent
+    ForumComponent,
+    HistoricGraphComponent
   ],
   imports: [
     BrowserModule,
