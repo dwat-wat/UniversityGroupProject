@@ -1,0 +1,20 @@
+<html>
+    <body style="text-align: center;">
+        <h2> Historic Data </h2><br>
+                        <div id="mylinechart" class="canvasContainer" style="text-align: center;">
+                            <h3>Please enter the desired dates, using this format as an example '2020-03-06.23:09:00'.</h3>
+                            <canvas id="lineChart">{{lineChart}}</canvas>
+                        </div>
+                        <br>
+                    <td>
+                    <input type="string" #inputStart placeholder="Enter Start Date" style="text-align: center;">
+                    </td>
+                    <td>
+                    <input type="string" #inputEnd placeholder="Enter Start Date" style="text-align: center;">
+                    </td>    
+                    <td>
+                    <button (click)="getData(inputStart.value, inputEnd.value)"> Search</button>
+                    </td>
+    </body>
+</html>
+
