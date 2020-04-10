@@ -10,7 +10,7 @@ tablestorageconnectionstring = config[1];
 
 rLinear = 100.0
 rRBF = 100.0
-rPoly = 0.0
+rPoly = 100.0
 
 predictions = [rLinear, rRBF, rPoly]
 

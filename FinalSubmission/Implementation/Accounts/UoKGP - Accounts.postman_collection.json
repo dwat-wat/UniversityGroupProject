@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "7d48dfab-0f76-4686-89de-abea354ac546",
+		"name": "UoKGP - Accounts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST New Account Local",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"region\":\"UK\",\r\n\"username\":\"User123123\",\r\n\"password\":\"Password2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/accounts/new",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"accounts",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST New Account Live Endpoint",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"region\":\"UK\",\r\n\"username\":\"User113333311\",\r\n\"password\":\"Password1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uokgpwebapi.azurewebsites.net/api/accounts/new",
+					"protocol": "https",
+					"host": [
+						"uokgpwebapi",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"accounts",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Login Local",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"region\":\"UK\",\r\n\"username\":\"User123123\",\r\n\"password\":\"Password2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/accounts/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"accounts",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Login Live Endpoint",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"region\":\"UK\",\r\n\"username\":\"User123123\",\r\n\"password\":\"Password2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uokgpvortexwebapi.azurewebsites.net/api/accounts/login",
+					"protocol": "https",
+					"host": [
+						"uokgpvortexwebapi",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"accounts",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

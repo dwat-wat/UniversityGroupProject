@@ -140,19 +140,47 @@ export class PortfoliosComponent implements OnInit {
       let startGBP = this.selected.startGBP
       let totalGBP = this.selected.startGBP
       let totalBTC = 0
+      console.log(this.selected.startGBP)
+      console.log(totalGBP)
+      let startTransaction = new Object();
+      startTransaction["quantity"] = 0;
+      startTransaction["timeStamp"] = this.selected.start
+      startTransaction["positionType"] = "START"
+      let endTransaction = new Object();
+      endTransaction["quantity"] = 0;
+      endTransaction["timeStamp"] = new Date()
+      endTransaction["positionType"] = "END"
 
+      let transactions = [startTransaction, endTransaction].concat(this.portfoliodata)
+      transactions = transactions.sort((t1,t2) => Date.parse(t1["timeStamp"]) - Date.parse(t2["timeStamp"]))
       console.log(this.selected)
 
-      for(let t = 0; t < this.portfoliodata.length-1; t++){
-        console.log(this.portfoliodata[t])
-        console.log("Transaction: " + t + "\nGBP: " + totalGBP + " BTC: " + totalBTC)
-        totalGBP -= (this.portfoliodata[t].quantity * response[i]["close"])
-        totalBTC += this.portfoliodata[t].quantity
-        console.log("Transaction: " + t + "\nGBP: " + totalGBP + " BTC: " + totalBTC)
-        console.log(Date.parse(response[i]["rowKey"]) + ' < ' + Date.parse(this.portfoliodata[t+1].timeStamp))
-        console.log(response[i]["rowKey"] + ' < ' + this.portfoliodata[t+1].timeStamp)
-        while(Date.parse(response[i]["rowKey"]) < Date.parse(this.portfoliodata[t+1].timeStamp)){
-          console.log(Date.parse(response[i]["rowKey"]) + ' < ' + Date.parse(this.portfoliodata[t+1].timeStamp))
+      transactions.forEach(t => console.log(t["positionType"] + " " + t["timeStamp"]))
+
+      for(let t = 0; t < transactions.length-1; t++){
+        if(i <= 0){
+          break;
+        }
+        // console.log(transactions[t])
+        // console.log("Transaction: " + t + "\nGBP: " + totalGBP + " BTC: " + totalBTC)
+        if(transactions[t]["positionType"] == "BUY"){
+          console.log("BUY")
+          totalGBP -= (transactions[t]["quantity"] * response[i]["close"])
+          totalBTC += transactions[t]["quantity"]
+        }
+        else if(transactions[t]["positionType"] == "SELL"){
+          console.log("SELL")
+          totalGBP += (transactions[t]["quantity"] * response[i]["close"])
+          totalBTC -= transactions[t]["quantity"]
+        }
+        console.log(totalGBP)
+        console.log(t)
+        // console.log("Transaction: " + t + "\nGBP: " + totalGBP + " BTC: " + totalBTC)
+        // console.log(Date.parse(response[i]["rowKey"]) + ' < ' + Date.parse(transactions[t+1].timeStamp))
+        // console.log(response[i]["rowKey"] + ' < ' + transactions[t+1].timeStamp)
+        while(i >= 0 && (Date.parse(response[i]["rowKey"]) < Date.parse(transactions[t+1]["timeStamp"]))){
+          console.log(Date.parse(transactions[t+1]["timeStamp"]))
+          // console.log(Date.parse(response[i]["rowKey"]) + ' < ' + Date.parse(transactions[t+1].timeStamp))
           this.cryptodata[0].series.push(
             new ChartData(
               response[i]["rowKey"], 
@@ -161,10 +189,10 @@ export class PortfoliosComponent implements OnInit {
         }
       }
       if(i >= 0){
-        totalGBP -= (this.portfoliodata[this.portfoliodata.length - 1].quantity * response[i]["close"])
-        totalBTC += this.portfoliodata[this.portfoliodata.length - 1].quantity
+        totalGBP -= (transactions[transactions.length - 1]["quantity"] * response[i]["close"])
+        totalBTC += transactions[transactions.length - 1]["quantity"]
         let now = new Date()
-        console.log("Transaction: " + (this.portfoliodata.length-1) + "\nGBP: " + totalGBP + " BTC: " + totalBTC)
+        // console.log("Transaction: " + (transactions.length-1) + "\nGBP: " + totalGBP + " BTC: " + totalBTC)
         while(i >= 0 && Date.parse(response[i]["rowKey"]) < now.valueOf()){
           this.cryptodata[0].series.push(
             new ChartData(

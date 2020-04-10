@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "19185e1a-dea0-4af6-bca4-76024247fe3d",
+		"name": "UoKGP - Price Prediction",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Prediction Data Local",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44373/api/Prediction/data?_currency=BTC&_from=01-01-2020&_to=02-01-2020",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Prediction",
+						"data"
+					],
+					"query": [
+						{
+							"key": "_currency",
+							"value": "BTC"
+						},
+						{
+							"key": "_from",
+							"value": "01-01-2020"
+						},
+						{
+							"key": "_to",
+							"value": "02-01-2020"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Prediction Data Live Endpoint",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "_currency",
+						"type": "text",
+						"value": "BTC"
+					},
+					{
+						"key": "__from",
+						"type": "text",
+						"value": "01-01-2020"
+					},
+					{
+						"key": "__to",
+						"type": "text",
+						"value": "02-01-2020"
+					}
+				],
+				"url": {
+					"raw": "https://uokgpwebapi.azurewebsites.net/api/Prediction/data?_currency=BTC&_from=01-01-2020&_to=02-01-2020",
+					"protocol": "https",
+					"host": [
+						"uokgpwebapi",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"Prediction",
+						"data"
+					],
+					"query": [
+						{
+							"key": "_currency",
+							"value": "BTC"
+						},
+						{
+							"key": "_from",
+							"value": "01-01-2020"
+						},
+						{
+							"key": "_to",
+							"value": "02-01-2020"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
