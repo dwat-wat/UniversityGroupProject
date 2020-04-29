@@ -8,6 +8,7 @@ import { ComparisonScreenComponent } from './comparison-screen/comparison-screen
 import { SocialMediaComponent } from './social-media/social-media.component'
 import { ForumComponent } from './forum/forum.component'
 import { HistoryComponent } from './history/history.component'
+import { ChatSystemComponent } from './chat-system/chat-system.component'
 import { HistoricGraphComponent } from './Historic Graph/historicgraph.component'
 import { GraphComponent } from './graph/graph.component'
 
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'forum',
     component: ForumComponent
+  },
+  {
+    path: 'live',
+    component: ChatSystemComponent
   },
   {
     path: 'history',

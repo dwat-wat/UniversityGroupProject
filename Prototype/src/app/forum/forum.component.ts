@@ -64,7 +64,7 @@ export class ForumComponent implements OnInit {
   }
 
   async getReply(){
-    let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/forum/data';
+    let url = 'https://uokgpvortexwebapi.azurewebsites.net/api/forum/reply';
     console.log(url)
     await this.http.get<Forum[]>(url).subscribe(
       response => {
