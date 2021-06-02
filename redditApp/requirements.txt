@@ -19,7 +19,7 @@ requests             ==2.22.0
 setuptools           ==45.2.0    
 six                  ==1.14.0    
 update-checker       ==0.16      
-urllib3              ==1.25.8    
+urllib3              ==1.26.5    
 websocket-client     ==0.57.0    
 wheel                ==0.34.2   
 textblob             ==0.15.3    
